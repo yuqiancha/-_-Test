@@ -440,15 +440,13 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                         byte[] buf1D0x = new byte[num];
                         Array.Copy(bufsav, i * 682 + 4, buf1D0x, 0, num);
 
-                        //SaveFile.Lock_13.EnterWriteLock();
-                        //SaveFile.DataQueue_SC13.Enqueue(buf1D0x);
-                        //SaveFile.Lock_13.ExitWriteLock();
+                        SaveFile.Lock_13.EnterWriteLock();
+                        SaveFile.DataQueue_SC13.Enqueue(buf1D0x);
+                        SaveFile.Lock_13.ExitWriteLock();
 
                         lock (Data.ADList01)
                         {
                             Data.ADList01.AddRange(buf1D0x);
-                            //for (int j = 0; j < num; j++)
-                            //    Data.ADList01.Add(buf1D0x[j]);
                         }
                     }
                     else if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x07)
@@ -456,14 +454,12 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                         int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
                         byte[] buf1D0x = new byte[num];
                         Array.Copy(bufsav, i * 682 + 4, buf1D0x, 0, num);
-                        //SaveFile.Lock_14.EnterWriteLock();
-                        //SaveFile.DataQueue_SC14.Enqueue(buf1D0x);
-                        //SaveFile.Lock_14.ExitWriteLock();
+                        SaveFile.Lock_14.EnterWriteLock();
+                        SaveFile.DataQueue_SC14.Enqueue(buf1D0x);
+                        SaveFile.Lock_14.ExitWriteLock();
                         lock (Data.ADList02)
                         {
-                            Data.ADList02.AddRange(buf1D0x);
-                            //for (int j = 0; j < num; j++)
-                            //    Data.ADList02.Add(buf1D0x[j]);
+                            Data.ADList02.AddRange(buf1D0x);         
                         }
 
                     }
@@ -1121,6 +1117,14 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                     {
                         textBox11.Text = temp;
                     }
+                    else if (btn.Name == "button19")
+                    {
+                        textBox12.Text = temp;
+                    }
+                    else if (btn.Name == "button21")
+                    {
+                        textBox13.Text = temp;
+                    }
                     else
                     {; }
                 }
@@ -1134,38 +1138,139 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
 
         private void button_translate68_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
             string input = textBox11.Text;
 
             string trans_buf = null;
             //是否判断定长？
-            if(input.Length==163*2)
+            if (input.Length == 162 * 2)
             {
                 byte[] buf_before_trans = StrToHexByte(input);
 
-                for(int i=0;i<buf_before_trans.Length;i++)
+                for (int i = 0; i < buf_before_trans.Length; i++)
                 {
                     trans_buf += Convert.ToString(buf_before_trans[i], 2).PadLeft(8, '0');
                 }
 
-                if(trans_buf.Length==1304)
+                if (trans_buf.Length == 1296)
                 {
-                    trans_buf.Substring(0, 1302);
+                    trans_buf.Substring(0, 1296);
                 }
 
 
                 byte[] buf_after_trans = new byte[217];
-                for(int i=0;i<217;i++)
+                string first = trans_buf.Substring(0, 6);
+
+                byte hexcrc = Convert.ToByte(first.PadLeft(8, '0'), 2);
+
+                for (int i = 0; i < 216; i++)
                 {
                     string temp = trans_buf.Substring(i * 6, 6);
 
                     buf_after_trans[i] = Convert.ToByte(temp.PadLeft(8, '0'), 2);
+                    if (i == 0)
+                    {
+                        hexcrc = Convert.ToByte(temp.PadLeft(8, '0'), 2);
+                    }
+                    else
+                    {
+                        byte b2 = Convert.ToByte(temp.PadLeft(8, '0'), 2);
+                        hexcrc ^= b2;
+                    }
                 }
+                buf_after_trans[216] = (byte)(hexcrc & 0x3f);
 
                 string output = null;
                 for (int i = 0; i < 217; i++) output += buf_after_trans[i].ToString("x2");
 
-                textBox11.Text = output;
+                if (btn.Name == "button_translate68_1")
+                {
+                    textBox_value_1d01.Text = output;
+                }
+                else if (btn.Name == "button_translate68_2")
+                {
+                    textBox_value_1d02.Text = output;
+                }
+                else
+                {
+
+                }
             }
+            else
+            {
+                MyLog.Error("数据长度不正确，不是162Bytes!");
+            }
+
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            string input = textBox12.Text;
+
+            string trans_buf = null;
+            //是否判断定长？
+
+            byte[] buf_before_trans = StrToHexByte(input);
+            byte[] buf_after_trans = new byte[buf_before_trans.Length + 1];
+
+            byte hexcrc = buf_before_trans[0];
+            for (int i = 1; i < buf_before_trans.Length; i++)
+            {
+                hexcrc ^= buf_before_trans[i];
+            }
+
+            buf_before_trans.CopyTo(buf_after_trans, 0);
+            buf_after_trans[buf_before_trans.Length] = hexcrc;
+
+
+
+            string output = null;
+            for (int i = 0; i < buf_after_trans.Length; i++) output += buf_after_trans[i].ToString("x2");
+
+            textBox12.Text = output;
+
+
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            string trans_buf = textBox13.Text.Trim();
+            trans_buf = trans_buf.Replace(" ", "");
+            trans_buf = trans_buf.Replace(",", "");
+            byte[] buf_after_trans = new byte[162];
+
+            for (int i = 0; i < buf_after_trans.Length; i++)
+            {
+                string temp = trans_buf.Substring(i * 8, 8);
+
+                buf_after_trans[i] = Convert.ToByte(temp, 2);
+
+            }
+
+            string output = null;
+            for (int j = 0; j < buf_after_trans.Length; j++)
+            {
+                output += buf_after_trans[j].ToString("x2");
+            }
+
+            textBox11.Text = output;
+
+        }
+
+
+        private void test()
+        {
+            string trans_buf = "111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110111111111110";
+            byte[] buf_after_trans = new byte[24];
+
+            for (int i = 0; i < 24; i++)
+            {
+                string temp = trans_buf.Substring(i * 8, 8);
+
+                buf_after_trans[i] = Convert.ToByte(temp, 2);
+            }
+
+            int t = 9;
 
         }
     }

@@ -123,22 +123,22 @@ namespace USBSpeedTest
             string Save_path = Program.GetStartupPath() + @"SaveData\";
        //    FileCreateDat(Program.GetStartupPath() + @"源码\", out file0);
 
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\源码\", out file_SC1);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\源码\", out file_SC1);
 
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\", out file_SC2);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF01\", out file_SC3);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF02\", out file_SC4);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF03\", out file_SC5);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF04\", out file_SC6);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\", out file_SC2);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF01\", out file_SC3);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF02\", out file_SC4);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF03\", out file_SC5);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF04\", out file_SC6);
 
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D00(指令回令)\", out file_SC7);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D01(被动遥测RS422)\", out file_SC8);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D02(KA模拟器返回)\", out file_SC9);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D03(KD模拟器返回)\", out file_SC10);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D04(12所模拟器)\", out file_SC11);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D05(电源遥测)\", out file_SC12);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D06(AD通道0-7)\", out file_SC13);
-            FileCreateDat(Program.GetStartupPath() + @"单元测试仪数据\FF08\1D07(AD通道8-15)\", out file_SC14);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D00()\", out file_SC7);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D01()\", out file_SC8);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D02()\", out file_SC9);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D03()\", out file_SC10);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D04()\", out file_SC11);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D05()\", out file_SC12);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D06(AD通道0-7)\", out file_SC13);
+            FileCreateDat(Program.GetStartupPath() + @"测控模块数据\FF08\1D07(AD通道8-15)\", out file_SC14);
 
             //FileCreateDat(Program.GetStartupPath() + @"数传机箱数据\同步422数据\通道2\", out file_SC11);
             //FileCreateDat(Program.GetStartupPath() + @"数传机箱数据\FF08\", out file_SC12);
