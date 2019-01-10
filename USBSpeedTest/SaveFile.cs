@@ -317,7 +317,7 @@ namespace USBSpeedTest
             Trace.WriteLine("Start WriteToFileSC Thread:" + key.ToString());
             FileStream myfile = (FileStream)file;
             BinaryWriter bw = new BinaryWriter(myfile);
-       //     FileInfo fileInfo;
+            FileInfo fileInfo;
 
             while (SaveOn)
             {
@@ -326,8 +326,8 @@ namespace USBSpeedTest
                     try
                     {
                         myLock.EnterReadLock();
-                   //     bw.Write(myQueue.Dequeue());
-                   //     bw.Flush();
+                        bw.Write(myQueue.Dequeue());
+                        bw.Flush();
                         myLock.ExitReadLock();
 
                         #region 分割文件，防止文件过大

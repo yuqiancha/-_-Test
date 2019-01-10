@@ -484,16 +484,16 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
 
                 lock (Data.ADList01)
                 {
-                    if (Data.ADList01.Count > 16)
+                    if (Data.ADList01.Count > 20)
                     {
                         Tag1 = true;
 
-                        byte[] buf = new byte[16];
-                        for (int t = 0; t < 16; t++)
+                        byte[] buf = new byte[20];
+                        for (int t = 0; t < 20; t++)
                         {
                             buf[t] = Data.ADList01[t];
                         }
-                        for (int k = 0; k < 8; k++)
+                        for (int k = 2; k < 10; k++)
                         {
                             int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
 
@@ -504,11 +504,11 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                             double value = temp;
                             value = 10 * (value / 32767);
                             if ((buf[2 * k] & 0x80) == 0x80)
-                                Data.daRe_AD01[k] = -value;
+                                Data.daRe_AD01[k-2] = -value;
                             else
-                                Data.daRe_AD01[k] = value;
+                                Data.daRe_AD01[k-2] = value;
                         }
-                        Data.ADList01.RemoveRange(0, 16);
+                        Data.ADList01.RemoveRange(0, 20);
                     }
                     else
                     {
@@ -521,15 +521,15 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 lock (Data.ADList02)
                 {
 
-                    if (Data.ADList02.Count > 16)
+                    if (Data.ADList02.Count > 20)
                     {
                         Tag2 = true;
-                        byte[] buf = new byte[16];
-                        for (int t = 0; t < 16; t++)
+                        byte[] buf = new byte[20];
+                        for (int t = 0; t < 20; t++)
                         {
                             buf[t] = Data.ADList02[t];
                         }
-                        for (int k = 0; k < 8; k++)
+                        for (int k = 2; k < 10; k++)
                         {
                             int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
 
@@ -541,11 +541,11 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                             double value = temp;
                             value = 10 * (value / 32767);
                             if ((buf[2 * k] & 0x80) == 0x80)
-                                Data.daRe_AD02[k] = -value;
+                                Data.daRe_AD02[k-2] = -value;
                             else
-                                Data.daRe_AD02[k] = value;
+                                Data.daRe_AD02[k-2] = value;
                         }
-                        Data.ADList02.RemoveRange(0, 16);
+                        Data.ADList02.RemoveRange(0, 20);
                     }
                     else
                     {
