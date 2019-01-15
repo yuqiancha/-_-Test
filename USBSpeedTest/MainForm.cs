@@ -276,9 +276,9 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                         byte[] Svbuf = new byte[buflen];
                         Array.Copy(buf, Svbuf, buflen);
 
-                        SaveFile.Lock_1.EnterWriteLock();
-                        SaveFile.DataQueue_SC1.Enqueue(Svbuf);
-                        SaveFile.Lock_1.ExitWriteLock();
+                        //SaveFile.Lock_1.EnterWriteLock();
+                        //SaveFile.DataQueue_SC1.Enqueue(Svbuf);
+                        //SaveFile.Lock_1.ExitWriteLock();
 
                         while (TempStoreBufTag >= 4096)
                         {
@@ -440,9 +440,9 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                         byte[] buf1D0x = new byte[num];
                         Array.Copy(bufsav, i * 682 + 4, buf1D0x, 0, num);
 
-                        SaveFile.Lock_13.EnterWriteLock();
-                        SaveFile.DataQueue_SC13.Enqueue(buf1D0x);
-                        SaveFile.Lock_13.ExitWriteLock();
+                        //SaveFile.Lock_13.EnterWriteLock();
+                        //SaveFile.DataQueue_SC13.Enqueue(buf1D0x);
+                        //SaveFile.Lock_13.ExitWriteLock();
 
                         lock (Data.ADList01)
                         {
@@ -454,12 +454,14 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                         int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
                         byte[] buf1D0x = new byte[num];
                         Array.Copy(bufsav, i * 682 + 4, buf1D0x, 0, num);
-                        SaveFile.Lock_14.EnterWriteLock();
-                        SaveFile.DataQueue_SC14.Enqueue(buf1D0x);
-                        SaveFile.Lock_14.ExitWriteLock();
+
+                        //SaveFile.Lock_14.EnterWriteLock();
+                        //SaveFile.DataQueue_SC14.Enqueue(buf1D0x);
+                        //SaveFile.Lock_14.ExitWriteLock();
+
                         lock (Data.ADList02)
                         {
-                            Data.ADList02.AddRange(buf1D0x);         
+                            Data.ADList02.AddRange(buf1D0x);
                         }
 
                     }
@@ -482,76 +484,78 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 bool Tag1 = false;
                 bool Tag2 = false;
 
-                lock (Data.ADList01)
+
+                if (Data.ADList01.Count > 1000)
                 {
-                    if (Data.ADList01.Count > 200)
+                    Tag1 = true;
+
+                    byte[] buf = new byte[20];
+
+                    for (int t = 0; t < 20; t++)
                     {
-                        Tag1 = true;
+                        buf[t] = Data.ADList01[t];
 
-                        byte[] buf = new byte[20];
-                        for (int t = 0; t < 20; t++)
-                        {
-                            buf[t] = Data.ADList01[t];
-                        }
-                        for (int k = 2; k < 10; k++)
-                        {
-                            int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
-
-                            if ((buf[2 * k] & 0x80) == 0x80)
-                            {
-                                temp = 0x8000 - temp;
-                            }
-                            double value = temp;
-                            value = 10 * (value / 32767);
-                            if ((buf[2 * k] & 0x80) == 0x80)
-                                Data.daRe_AD01[k-2] = -value;
-                            else
-                                Data.daRe_AD01[k-2] = value;
-                        }
-                        Data.ADList01.RemoveRange(0, 200);
                     }
-                    else
+                    lock (Data.ADList01)
+                        Data.ADList01.RemoveRange(0, 1000);
+
+                    for (int k = 2; k < 10; k++)
                     {
-                        Tag1 = false;
+                        int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
+
+                        if ((buf[2 * k] & 0x80) == 0x80)
+                        {
+                            temp = 0x8000 - temp;
+                        }
+                        double value = temp;
+                        value = 10 * (value / 32767);
+                        if ((buf[2 * k] & 0x80) == 0x80)
+                            Data.daRe_AD01[k - 2] = -value;
+                        else
+                            Data.daRe_AD01[k - 2] = value;
                     }
 
                 }
-
-
-                lock (Data.ADList02)
+                else
                 {
-
-                    if (Data.ADList02.Count > 200)
-                    {
-                        Tag2 = true;
-                        byte[] buf = new byte[20];
-                        for (int t = 0; t < 20; t++)
-                        {
-                            buf[t] = Data.ADList02[t];
-                        }
-                        for (int k = 2; k < 10; k++)
-                        {
-                            int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
-
-                            if ((buf[2 * k] & 0x80) == 0x80)
-                            {
-                                temp = 0x8000 - temp;
-                            }
-
-                            double value = temp;
-                            value = 10 * (value / 32767);
-                            if ((buf[2 * k] & 0x80) == 0x80)
-                                Data.daRe_AD02[k-2] = -value;
-                            else
-                                Data.daRe_AD02[k-2] = value;
-                        }
-                        Data.ADList02.RemoveRange(0, 200);
-                    }
-                    else
-                    {
-                        Tag2 = false;
-                    }
+                    Tag1 = false;
                 }
+
+
+                if (Data.ADList02.Count > 1000)
+                {
+                    Tag2 = true;
+                    byte[] buf = new byte[20];
+                    for (int t = 0; t < 20; t++)
+                    {
+                        buf[t] = Data.ADList02[t];
+                    }
+                    lock (Data.ADList02)
+                        Data.ADList02.RemoveRange(0, 1000);
+
+                    for (int k = 2; k < 10; k++)
+                    {
+                        int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
+
+                        if ((buf[2 * k] & 0x80) == 0x80)
+                        {
+                            temp = 0x8000 - temp;
+                        }
+
+                        double value = temp;
+                        value = 10 * (value / 32767);
+                        if ((buf[2 * k] & 0x80) == 0x80)
+                            Data.daRe_AD02[k - 2] = -value;
+                        else
+                            Data.daRe_AD02[k - 2] = value;
+                    }
+
+                }
+                else
+                {
+                    Tag2 = false;
+                }
+
 
                 if (Tag1 == false && Tag2 == false)
                 {
@@ -843,8 +847,8 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                     Data.dt_AD01.Rows[i]["测量值"] = Data.daRe_AD01[i];
                     Data.dt_AD02.Rows[i]["测量值"] = Data.daRe_AD02[i];
 
-                    Data.MyPane.CurveList[i].AddPoint(Data.PaneCount, Data.daRe_AD01[i]);
-                    Data.MyPane.CurveList[i + 8].AddPoint(Data.PaneCount, Data.daRe_AD02[i]);
+                    //       Data.MyPane.CurveList[i].AddPoint(Data.PaneCount, Data.daRe_AD01[i]);
+                    //       Data.MyPane.CurveList[i + 8].AddPoint(Data.PaneCount, Data.daRe_AD02[i]);
                 }
 
                 Data.PaneCount++;
@@ -1272,6 +1276,20 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
 
             int t = 9;
 
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            if (button23.Text == "存储功能已打开")
+            {
+                button23.Text = "存储功能已关闭";
+                Data.StoreOn = false;
+            }
+            else
+            {
+                button23.Text = "存储功能已打开";
+                Data.StoreOn = true;
+            }
         }
     }
 

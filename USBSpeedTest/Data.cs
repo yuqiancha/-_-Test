@@ -12,6 +12,7 @@ namespace USBSpeedTest
 {
     class Data
     {
+        public static bool StoreOn = false;
 
         public static GraphPane MyPane;
 

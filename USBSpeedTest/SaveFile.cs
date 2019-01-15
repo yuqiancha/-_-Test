@@ -326,8 +326,11 @@ namespace USBSpeedTest
                     try
                     {
                         myLock.EnterReadLock();
-                        bw.Write(myQueue.Dequeue());
-                        bw.Flush();
+                        if (Data.StoreOn)
+                        {
+                            bw.Write(myQueue.Dequeue());
+                            bw.Flush();
+                        }
                         myLock.ExitReadLock();
 
                         #region 分割文件，防止文件过大

@@ -105,30 +105,40 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.查看AD数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.groupBox21 = new System.Windows.Forms.GroupBox();
-            this.button14 = new System.Windows.Forms.Button();
-            this.textBox_value_1d04 = new System.Windows.Forms.TextBox();
-            this.button12 = new System.Windows.Forms.Button();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.button18 = new System.Windows.Forms.Button();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.button_translate68_1 = new System.Windows.Forms.Button();
-            this.groupBox20 = new System.Windows.Forms.GroupBox();
-            this.button13 = new System.Windows.Forms.Button();
-            this.textBox_value_1d03 = new System.Windows.Forms.TextBox();
-            this.button11 = new System.Windows.Forms.Button();
-            this.groupBox19 = new System.Windows.Forms.GroupBox();
-            this.button16 = new System.Windows.Forms.Button();
-            this.textBox_value_1d02 = new System.Windows.Forms.TextBox();
-            this.button9 = new System.Windows.Forms.Button();
-            this.groupBox18 = new System.Windows.Forms.GroupBox();
-            this.button15 = new System.Windows.Forms.Button();
-            this.textBox_value_1d01 = new System.Windows.Forms.TextBox();
-            this.button8 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button17 = new System.Windows.Forms.Button();
             this.textBox_value = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
+            this.groupBox19 = new System.Windows.Forms.GroupBox();
+            this.button16 = new System.Windows.Forms.Button();
+            this.textBox_value_1d02 = new System.Windows.Forms.TextBox();
+            this.button9 = new System.Windows.Forms.Button();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.button18 = new System.Windows.Forms.Button();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.button_translate68_2 = new System.Windows.Forms.Button();
+            this.button_translate68_1 = new System.Windows.Forms.Button();
+            this.groupBox18 = new System.Windows.Forms.GroupBox();
+            this.button15 = new System.Windows.Forms.Button();
+            this.textBox_value_1d01 = new System.Windows.Forms.TextBox();
+            this.button8 = new System.Windows.Forms.Button();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.button21 = new System.Windows.Forms.Button();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.button22 = new System.Windows.Forms.Button();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.button14 = new System.Windows.Forms.Button();
+            this.textBox_value_1d04 = new System.Windows.Forms.TextBox();
+            this.button12 = new System.Windows.Forms.Button();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.button19 = new System.Windows.Forms.Button();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.button20 = new System.Windows.Forms.Button();
+            this.groupBox20 = new System.Windows.Forms.GroupBox();
+            this.button13 = new System.Windows.Forms.Button();
+            this.textBox_value_1d03 = new System.Windows.Forms.TextBox();
+            this.button11 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -164,28 +174,22 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button3 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.button19 = new System.Windows.Forms.Button();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.button20 = new System.Windows.Forms.Button();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.button21 = new System.Windows.Forms.Button();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.button22 = new System.Windows.Forms.Button();
-            this.button_translate68_2 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.button23 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox21.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox20.SuspendLayout();
-            this.groupBox19.SuspendLayout();
-            this.groupBox18.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox19.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox18.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox21.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox20.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -198,9 +202,6 @@
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox11.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -1103,6 +1104,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button23);
             this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel3);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox4);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
@@ -1116,6 +1118,274 @@
             this.splitContainer1.Size = new System.Drawing.Size(1214, 803);
             this.splitContainer1.SplitterDistance = 746;
             this.splitContainer1.TabIndex = 89;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel3.Controls.Add(this.groupBox5, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox19, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox9, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox18, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox11, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox21, 1, 3);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox10, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox20, 1, 2);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(8, 459);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 4;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(729, 337);
+            this.tableLayoutPanel3.TabIndex = 110;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.button17);
+            this.groupBox5.Controls.Add(this.textBox_value);
+            this.groupBox5.Controls.Add(this.button6);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Location = new System.Drawing.Point(476, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(250, 78);
+            this.groupBox5.TabIndex = 109;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "1D00-设置输入参数";
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(10, 21);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(75, 23);
+            this.button17.TabIndex = 109;
+            this.button17.Text = "载入码本";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // textBox_value
+            // 
+            this.textBox_value.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_value.Location = new System.Drawing.Point(94, 21);
+            this.textBox_value.Multiline = true;
+            this.textBox_value.Name = "textBox_value";
+            this.textBox_value.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox_value.Size = new System.Drawing.Size(145, 48);
+            this.textBox_value.TabIndex = 107;
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button6.Location = new System.Drawing.Point(10, 48);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 108;
+            this.button6.Text = "输出";
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
+            // groupBox19
+            // 
+            this.groupBox19.Controls.Add(this.button16);
+            this.groupBox19.Controls.Add(this.textBox_value_1d02);
+            this.groupBox19.Controls.Add(this.button9);
+            this.groupBox19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox19.Location = new System.Drawing.Point(3, 255);
+            this.groupBox19.Name = "groupBox19";
+            this.groupBox19.Size = new System.Drawing.Size(467, 79);
+            this.groupBox19.TabIndex = 109;
+            this.groupBox19.TabStop = false;
+            this.groupBox19.Text = "1D02--移相器数据2注入(217Byte)";
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(10, 15);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(75, 23);
+            this.button16.TabIndex = 109;
+            this.button16.Text = "载入码本";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // textBox_value_1d02
+            // 
+            this.textBox_value_1d02.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_value_1d02.Location = new System.Drawing.Point(91, 15);
+            this.textBox_value_1d02.Multiline = true;
+            this.textBox_value_1d02.Name = "textBox_value_1d02";
+            this.textBox_value_1d02.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox_value_1d02.Size = new System.Drawing.Size(373, 49);
+            this.textBox_value_1d02.TabIndex = 107;
+            // 
+            // button9
+            // 
+            this.button9.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button9.Location = new System.Drawing.Point(10, 42);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 108;
+            this.button9.Text = "输出";
+            this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click_2);
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.button18);
+            this.groupBox9.Controls.Add(this.textBox11);
+            this.groupBox9.Controls.Add(this.button_translate68_2);
+            this.groupBox9.Controls.Add(this.button_translate68_1);
+            this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox9.Location = new System.Drawing.Point(3, 87);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(467, 78);
+            this.groupBox9.TabIndex = 109;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "移相器码本数据转换(文本框内长度为162Byte对应216*6bit)";
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(6, 21);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(37, 49);
+            this.button18.TabIndex = 109;
+            this.button18.Text = "载入HEX码本";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // textBox11
+            // 
+            this.textBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox11.Location = new System.Drawing.Point(126, 18);
+            this.textBox11.Multiline = true;
+            this.textBox11.Name = "textBox11";
+            this.textBox11.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox11.Size = new System.Drawing.Size(335, 56);
+            this.textBox11.TabIndex = 107;
+            // 
+            // button_translate68_2
+            // 
+            this.button_translate68_2.BackColor = System.Drawing.Color.SeaShell;
+            this.button_translate68_2.Location = new System.Drawing.Point(47, 46);
+            this.button_translate68_2.Name = "button_translate68_2";
+            this.button_translate68_2.Size = new System.Drawing.Size(74, 23);
+            this.button_translate68_2.TabIndex = 108;
+            this.button_translate68_2.Text = "转换填入02";
+            this.button_translate68_2.UseVisualStyleBackColor = false;
+            this.button_translate68_2.Click += new System.EventHandler(this.button_translate68_Click);
+            // 
+            // button_translate68_1
+            // 
+            this.button_translate68_1.BackColor = System.Drawing.Color.SeaShell;
+            this.button_translate68_1.Location = new System.Drawing.Point(47, 20);
+            this.button_translate68_1.Name = "button_translate68_1";
+            this.button_translate68_1.Size = new System.Drawing.Size(74, 23);
+            this.button_translate68_1.TabIndex = 108;
+            this.button_translate68_1.Text = "转换填入01";
+            this.button_translate68_1.UseVisualStyleBackColor = false;
+            this.button_translate68_1.Click += new System.EventHandler(this.button_translate68_Click);
+            // 
+            // groupBox18
+            // 
+            this.groupBox18.Controls.Add(this.button15);
+            this.groupBox18.Controls.Add(this.textBox_value_1d01);
+            this.groupBox18.Controls.Add(this.button8);
+            this.groupBox18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox18.Location = new System.Drawing.Point(3, 171);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Size = new System.Drawing.Size(467, 78);
+            this.groupBox18.TabIndex = 109;
+            this.groupBox18.TabStop = false;
+            this.groupBox18.Text = "1D01--移相器数据1注入(217Byte)";
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(10, 17);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(75, 23);
+            this.button15.TabIndex = 109;
+            this.button15.Text = "载入码本";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // textBox_value_1d01
+            // 
+            this.textBox_value_1d01.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_value_1d01.Location = new System.Drawing.Point(90, 17);
+            this.textBox_value_1d01.Multiline = true;
+            this.textBox_value_1d01.Name = "textBox_value_1d01";
+            this.textBox_value_1d01.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox_value_1d01.Size = new System.Drawing.Size(373, 48);
+            this.textBox_value_1d01.TabIndex = 107;
+            // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button8.Location = new System.Drawing.Point(10, 44);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 108;
+            this.button8.Text = "输出";
+            this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.button21);
+            this.groupBox11.Controls.Add(this.textBox13);
+            this.groupBox11.Controls.Add(this.button22);
+            this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox11.Location = new System.Drawing.Point(3, 3);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(467, 78);
+            this.groupBox11.TabIndex = 109;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "移相器码本二进制转十六进制";
+            // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(6, 18);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(75, 23);
+            this.button21.TabIndex = 109;
+            this.button21.Text = "载入码本";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // textBox13
+            // 
+            this.textBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox13.Location = new System.Drawing.Point(87, 18);
+            this.textBox13.Multiline = true;
+            this.textBox13.Name = "textBox13";
+            this.textBox13.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox13.Size = new System.Drawing.Size(374, 57);
+            this.textBox13.TabIndex = 107;
+            // 
+            // button22
+            // 
+            this.button22.BackColor = System.Drawing.Color.SeaShell;
+            this.button22.Location = new System.Drawing.Point(6, 45);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(75, 23);
+            this.button22.TabIndex = 108;
+            this.button22.Text = "转换";
+            this.button22.UseVisualStyleBackColor = false;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
             // groupBox21
             // 
@@ -1164,52 +1434,51 @@
             this.button12.UseVisualStyleBackColor = false;
             this.button12.Click += new System.EventHandler(this.button12_Click_1);
             // 
-            // groupBox9
+            // groupBox10
             // 
-            this.groupBox9.Controls.Add(this.button18);
-            this.groupBox9.Controls.Add(this.textBox11);
-            this.groupBox9.Controls.Add(this.button_translate68_2);
-            this.groupBox9.Controls.Add(this.button_translate68_1);
-            this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox9.Location = new System.Drawing.Point(3, 87);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(467, 78);
-            this.groupBox9.TabIndex = 109;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "移相器码本数据转换(文本框内长度为162Byte对应216*6bit)";
+            this.groupBox10.Controls.Add(this.button19);
+            this.groupBox10.Controls.Add(this.textBox12);
+            this.groupBox10.Controls.Add(this.button20);
+            this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox10.Location = new System.Drawing.Point(476, 87);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(250, 78);
+            this.groupBox10.TabIndex = 109;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "电源数据和校验计算";
             // 
-            // button18
+            // button19
             // 
-            this.button18.Location = new System.Drawing.Point(6, 21);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(37, 49);
-            this.button18.TabIndex = 109;
-            this.button18.Text = "载入HEX码本";
-            this.button18.UseVisualStyleBackColor = true;
-            this.button18.Click += new System.EventHandler(this.button13_Click);
+            this.button19.Location = new System.Drawing.Point(6, 18);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(75, 23);
+            this.button19.TabIndex = 109;
+            this.button19.Text = "载入码本";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button13_Click);
             // 
-            // textBox11
+            // textBox12
             // 
-            this.textBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.textBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox11.Location = new System.Drawing.Point(126, 18);
-            this.textBox11.Multiline = true;
-            this.textBox11.Name = "textBox11";
-            this.textBox11.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox11.Size = new System.Drawing.Size(335, 56);
-            this.textBox11.TabIndex = 107;
+            this.textBox12.Location = new System.Drawing.Point(87, 18);
+            this.textBox12.Multiline = true;
+            this.textBox12.Name = "textBox12";
+            this.textBox12.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox12.Size = new System.Drawing.Size(152, 48);
+            this.textBox12.TabIndex = 107;
             // 
-            // button_translate68_1
+            // button20
             // 
-            this.button_translate68_1.BackColor = System.Drawing.Color.SeaShell;
-            this.button_translate68_1.Location = new System.Drawing.Point(47, 20);
-            this.button_translate68_1.Name = "button_translate68_1";
-            this.button_translate68_1.Size = new System.Drawing.Size(74, 23);
-            this.button_translate68_1.TabIndex = 108;
-            this.button_translate68_1.Text = "转换填入01";
-            this.button_translate68_1.UseVisualStyleBackColor = false;
-            this.button_translate68_1.Click += new System.EventHandler(this.button_translate68_Click);
+            this.button20.BackColor = System.Drawing.Color.SeaShell;
+            this.button20.Location = new System.Drawing.Point(6, 45);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(75, 23);
+            this.button20.TabIndex = 108;
+            this.button20.Text = "添加校验和";
+            this.button20.UseVisualStyleBackColor = false;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // groupBox20
             // 
@@ -1257,144 +1526,6 @@
             this.button11.Text = "输出";
             this.button11.UseVisualStyleBackColor = false;
             this.button11.Click += new System.EventHandler(this.button11_Click_1);
-            // 
-            // groupBox19
-            // 
-            this.groupBox19.Controls.Add(this.button16);
-            this.groupBox19.Controls.Add(this.textBox_value_1d02);
-            this.groupBox19.Controls.Add(this.button9);
-            this.groupBox19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox19.Location = new System.Drawing.Point(3, 255);
-            this.groupBox19.Name = "groupBox19";
-            this.groupBox19.Size = new System.Drawing.Size(467, 79);
-            this.groupBox19.TabIndex = 109;
-            this.groupBox19.TabStop = false;
-            this.groupBox19.Text = "1D02--移相器数据2注入(217Byte)";
-            // 
-            // button16
-            // 
-            this.button16.Location = new System.Drawing.Point(10, 15);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(75, 23);
-            this.button16.TabIndex = 109;
-            this.button16.Text = "载入码本";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // textBox_value_1d02
-            // 
-            this.textBox_value_1d02.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_value_1d02.Location = new System.Drawing.Point(91, 15);
-            this.textBox_value_1d02.Multiline = true;
-            this.textBox_value_1d02.Name = "textBox_value_1d02";
-            this.textBox_value_1d02.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_value_1d02.Size = new System.Drawing.Size(373, 49);
-            this.textBox_value_1d02.TabIndex = 107;
-            // 
-            // button9
-            // 
-            this.button9.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.button9.Location = new System.Drawing.Point(10, 42);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 108;
-            this.button9.Text = "输出";
-            this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click_2);
-            // 
-            // groupBox18
-            // 
-            this.groupBox18.Controls.Add(this.button15);
-            this.groupBox18.Controls.Add(this.textBox_value_1d01);
-            this.groupBox18.Controls.Add(this.button8);
-            this.groupBox18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox18.Location = new System.Drawing.Point(3, 171);
-            this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(467, 78);
-            this.groupBox18.TabIndex = 109;
-            this.groupBox18.TabStop = false;
-            this.groupBox18.Text = "1D01--移相器数据1注入(217Byte)";
-            // 
-            // button15
-            // 
-            this.button15.Location = new System.Drawing.Point(10, 17);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(75, 23);
-            this.button15.TabIndex = 109;
-            this.button15.Text = "载入码本";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // textBox_value_1d01
-            // 
-            this.textBox_value_1d01.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_value_1d01.Location = new System.Drawing.Point(90, 17);
-            this.textBox_value_1d01.Multiline = true;
-            this.textBox_value_1d01.Name = "textBox_value_1d01";
-            this.textBox_value_1d01.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_value_1d01.Size = new System.Drawing.Size(373, 48);
-            this.textBox_value_1d01.TabIndex = 107;
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.button8.Location = new System.Drawing.Point(10, 44);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 108;
-            this.button8.Text = "输出";
-            this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.button17);
-            this.groupBox5.Controls.Add(this.textBox_value);
-            this.groupBox5.Controls.Add(this.button6);
-            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(476, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(250, 78);
-            this.groupBox5.TabIndex = 109;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "1D00-设置输入参数";
-            // 
-            // button17
-            // 
-            this.button17.Location = new System.Drawing.Point(10, 21);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(75, 23);
-            this.button17.TabIndex = 109;
-            this.button17.Text = "载入码本";
-            this.button17.UseVisualStyleBackColor = true;
-            this.button17.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // textBox_value
-            // 
-            this.textBox_value.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_value.Location = new System.Drawing.Point(94, 21);
-            this.textBox_value.Multiline = true;
-            this.textBox_value.Name = "textBox_value";
-            this.textBox_value.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_value.Size = new System.Drawing.Size(145, 48);
-            this.textBox_value.TabIndex = 107;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.button6.Location = new System.Drawing.Point(10, 48);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 108;
-            this.button6.Text = "输出";
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
             // 
             // groupBox4
             // 
@@ -1752,6 +1883,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // button3
@@ -1768,134 +1900,15 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // groupBox10
+            // button23
             // 
-            this.groupBox10.Controls.Add(this.button19);
-            this.groupBox10.Controls.Add(this.textBox12);
-            this.groupBox10.Controls.Add(this.button20);
-            this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox10.Location = new System.Drawing.Point(476, 87);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(250, 78);
-            this.groupBox10.TabIndex = 109;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "电源数据和校验计算";
-            // 
-            // button19
-            // 
-            this.button19.Location = new System.Drawing.Point(6, 18);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(75, 23);
-            this.button19.TabIndex = 109;
-            this.button19.Text = "载入码本";
-            this.button19.UseVisualStyleBackColor = true;
-            this.button19.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // textBox12
-            // 
-            this.textBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox12.Location = new System.Drawing.Point(87, 18);
-            this.textBox12.Multiline = true;
-            this.textBox12.Name = "textBox12";
-            this.textBox12.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox12.Size = new System.Drawing.Size(152, 48);
-            this.textBox12.TabIndex = 107;
-            // 
-            // button20
-            // 
-            this.button20.BackColor = System.Drawing.Color.SeaShell;
-            this.button20.Location = new System.Drawing.Point(6, 45);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(75, 23);
-            this.button20.TabIndex = 108;
-            this.button20.Text = "添加校验和";
-            this.button20.UseVisualStyleBackColor = false;
-            this.button20.Click += new System.EventHandler(this.button20_Click);
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.button21);
-            this.groupBox11.Controls.Add(this.textBox13);
-            this.groupBox11.Controls.Add(this.button22);
-            this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox11.Location = new System.Drawing.Point(3, 3);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(467, 78);
-            this.groupBox11.TabIndex = 109;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "移相器码本二进制转十六进制";
-            // 
-            // button21
-            // 
-            this.button21.Location = new System.Drawing.Point(6, 18);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(75, 23);
-            this.button21.TabIndex = 109;
-            this.button21.Text = "载入码本";
-            this.button21.UseVisualStyleBackColor = true;
-            this.button21.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // textBox13
-            // 
-            this.textBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox13.Location = new System.Drawing.Point(87, 18);
-            this.textBox13.Multiline = true;
-            this.textBox13.Name = "textBox13";
-            this.textBox13.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox13.Size = new System.Drawing.Size(374, 57);
-            this.textBox13.TabIndex = 107;
-            // 
-            // button22
-            // 
-            this.button22.BackColor = System.Drawing.Color.SeaShell;
-            this.button22.Location = new System.Drawing.Point(6, 45);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(75, 23);
-            this.button22.TabIndex = 108;
-            this.button22.Text = "转换";
-            this.button22.UseVisualStyleBackColor = false;
-            this.button22.Click += new System.EventHandler(this.button22_Click);
-            // 
-            // button_translate68_2
-            // 
-            this.button_translate68_2.BackColor = System.Drawing.Color.SeaShell;
-            this.button_translate68_2.Location = new System.Drawing.Point(47, 46);
-            this.button_translate68_2.Name = "button_translate68_2";
-            this.button_translate68_2.Size = new System.Drawing.Size(74, 23);
-            this.button_translate68_2.TabIndex = 108;
-            this.button_translate68_2.Text = "转换填入02";
-            this.button_translate68_2.UseVisualStyleBackColor = false;
-            this.button_translate68_2.Click += new System.EventHandler(this.button_translate68_Click);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel3.Controls.Add(this.groupBox5, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox19, 0, 3);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox9, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox18, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox11, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox21, 1, 3);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox10, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox20, 1, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(8, 459);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 4;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(729, 337);
-            this.tableLayoutPanel3.TabIndex = 110;
+            this.button23.Location = new System.Drawing.Point(638, 366);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(99, 53);
+            this.button23.TabIndex = 111;
+            this.button23.Text = "存储功能已打开";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // MainForm
             // 
@@ -1919,18 +1932,23 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox21.ResumeLayout(false);
-            this.groupBox21.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
-            this.groupBox20.ResumeLayout(false);
-            this.groupBox20.PerformLayout();
-            this.groupBox19.ResumeLayout(false);
-            this.groupBox19.PerformLayout();
-            this.groupBox18.ResumeLayout(false);
-            this.groupBox18.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox19.ResumeLayout(false);
+            this.groupBox19.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox18.ResumeLayout(false);
+            this.groupBox18.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            this.groupBox21.ResumeLayout(false);
+            this.groupBox21.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox20.ResumeLayout(false);
+            this.groupBox20.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -1950,11 +1968,6 @@
             this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox10.PerformLayout();
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox11.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2107,6 +2120,7 @@
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button_translate68_2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button button23;
     }
 }
 
