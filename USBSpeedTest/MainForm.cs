@@ -484,7 +484,7 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
 
                 lock (Data.ADList01)
                 {
-                    if (Data.ADList01.Count > 20)
+                    if (Data.ADList01.Count > 200)
                     {
                         Tag1 = true;
 
@@ -508,7 +508,7 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                             else
                                 Data.daRe_AD01[k-2] = value;
                         }
-                        Data.ADList01.RemoveRange(0, 20);
+                        Data.ADList01.RemoveRange(0, 200);
                     }
                     else
                     {
@@ -521,7 +521,7 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 lock (Data.ADList02)
                 {
 
-                    if (Data.ADList02.Count > 20)
+                    if (Data.ADList02.Count > 200)
                     {
                         Tag2 = true;
                         byte[] buf = new byte[20];
@@ -545,7 +545,7 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                             else
                                 Data.daRe_AD02[k-2] = value;
                         }
-                        Data.ADList02.RemoveRange(0, 20);
+                        Data.ADList02.RemoveRange(0, 200);
                     }
                     else
                     {
