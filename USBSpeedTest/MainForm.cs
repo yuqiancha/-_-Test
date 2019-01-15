@@ -233,7 +233,6 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 {
                     MyLog.Error("单元测试仪未连接！");
                 }
-
             }
             else
             {
@@ -530,6 +529,7 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                     {
                         buf[t] = Data.ADList02[t];
                     }
+
                     lock (Data.ADList02)
                         Data.ADList02.RemoveRange(0, 1000);
 
@@ -846,17 +846,8 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 {
                     Data.dt_AD01.Rows[i]["测量值"] = Data.daRe_AD01[i];
                     Data.dt_AD02.Rows[i]["测量值"] = Data.daRe_AD02[i];
-
-                    //       Data.MyPane.CurveList[i].AddPoint(Data.PaneCount, Data.daRe_AD01[i]);
-                    //       Data.MyPane.CurveList[i + 8].AddPoint(Data.PaneCount, Data.daRe_AD02[i]);
                 }
-
-                Data.PaneCount++;
-
-
             }
-
-
 
         }
 
