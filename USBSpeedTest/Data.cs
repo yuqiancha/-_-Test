@@ -32,6 +32,7 @@ namespace USBSpeedTest
         public static double[] daRe_AD02 = new double[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
         public static bool AdFrmIsAlive = false;
 
+
         public static double[] value_a = new double[128];                         //DA修正参数a
         public static double[] value_b = new double[128];                         //DA修正参数b
 

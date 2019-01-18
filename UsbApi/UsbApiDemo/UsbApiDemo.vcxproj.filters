@@ -23,6 +23,9 @@
     <ClInclude Include="Export.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="IAntennaInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="CKDll.lib" />

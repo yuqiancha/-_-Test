@@ -484,19 +484,14 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 bool Tag2 = false;
 
 
-                if (Data.ADList01.Count > 1000)
+                if (Data.ADList01.Count > 20)
                 {
                     Tag1 = true;
 
-                    byte[] buf = new byte[20];
+                    byte[] buf = Data.ADList01.Skip(0).Take(20).ToArray();
 
-                    for (int t = 0; t < 20; t++)
-                    {
-                        buf[t] = Data.ADList01[t];
-
-                    }
                     lock (Data.ADList01)
-                        Data.ADList01.RemoveRange(0, 1000);
+                        Data.ADList01.RemoveRange(0, 20);
 
                     for (int k = 2; k < 10; k++)
                     {
@@ -521,17 +516,15 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 }
 
 
-                if (Data.ADList02.Count > 1000)
+                if (Data.ADList02.Count > 20)
                 {
                     Tag2 = true;
-                    byte[] buf = new byte[20];
-                    for (int t = 0; t < 20; t++)
-                    {
-                        buf[t] = Data.ADList02[t];
-                    }
+
+                    byte[] buf = Data.ADList02.Skip(0).Take(20).ToArray();
+
 
                     lock (Data.ADList02)
-                        Data.ADList02.RemoveRange(0, 1000);
+                        Data.ADList02.RemoveRange(0, 20);
 
                     for (int k = 2; k < 10; k++)
                     {

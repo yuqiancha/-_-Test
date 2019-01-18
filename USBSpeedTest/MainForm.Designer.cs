@@ -105,6 +105,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.查看AD数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button23 = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button17 = new System.Windows.Forms.Button();
@@ -174,7 +175,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button3 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button23 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1119,6 +1119,16 @@
             this.splitContainer1.SplitterDistance = 746;
             this.splitContainer1.TabIndex = 89;
             // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(638, 366);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(99, 53);
+            this.button23.TabIndex = 111;
+            this.button23.Text = "存储功能已打开";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1883,7 +1893,6 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // button3
@@ -1899,16 +1908,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(638, 366);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(99, 53);
-            this.button23.TabIndex = 111;
-            this.button23.Text = "存储功能已打开";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // MainForm
             // 
