@@ -135,6 +135,7 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			pTr->mylock.lock();
 
+			#pragma region Ô¤·Å+7V
 			if (pTr->dataRe_AD01[9] > 3)
 			{
 				if (pTr->dataRe_AD01[9] < 4)
@@ -145,7 +146,7 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			if (pTr->dataRe_AD01[0] > 2.506)
 			{
-				if (pTr->dataRe_AD01[0] < 3.1)
+				if (pTr->dataRe_AD01[0] < 2.6)
 				{
 					b0 = (pTr->dataRe_AD01[0] - 2.506) / 0.555;
 				}
@@ -153,11 +154,14 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			pTr->mRecalFun("Ô¤·Å+7V", b9, b0);
 			//	pTr->mRecalFun("Ô¤·Å+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+			#pragma endregion
 
 
-			if (pTr->dataRe_AD01[10] > 1.5)
+			#pragma region Ô¤·Å-5V
+
+			if (pTr->dataRe_AD01[10] > 1.8)
 			{
-				if (pTr->dataRe_AD01[10] < 3.2)
+				if (pTr->dataRe_AD01[10] < 2.2)
 				{
 					b10 = ((4.33*pTr->dataRe_AD01[10]) - 13.33);
 				}
@@ -165,15 +169,18 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			if (pTr->dataRe_AD01[1] > 2.552)
 			{
-				if (pTr->dataRe_AD01[1] < 3.1) {
+				if (pTr->dataRe_AD01[1] < 2.65) {
 					b1 = (pTr->dataRe_AD01[1] - 2.552) / 0.555;
 				}
 			}
-			pTr->mRecalFun("Ô¤·Å-5V",b10, b1);
+			pTr->mRecalFun("Ô¤·Å-5V", b10, b1);
+
+			#pragma endregion
 
 
 
 
+			#pragma region ²¨¿Ø+4V
 			if (pTr->dataRe_AD01[12] > 1.5)
 			{
 				if (pTr->dataRe_AD01[12] < 2.25)
@@ -184,35 +191,43 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			if (pTr->dataRe_AD01[2] > 2.451)
 			{
-				if (pTr->dataRe_AD01[2] < 3)
+				if (pTr->dataRe_AD01[2] < 2.73)
 				{
 					b2 = (pTr->dataRe_AD01[2] - 2.451) / 0.555;
 				}
 			}
 			pTr->mRecalFun("²¨¿Ø+4V", b12, b2);
+			#pragma endregion
 
 
 
-			if (pTr->dataRe_AD01[14] > 2.5)
+
+			#pragma region ²¨¿Ø+12V
+
+			if (pTr->dataRe_AD01[14] > 2.75)
 			{
-				if (pTr->dataRe_AD01[14] < 3.5)
+				if (pTr->dataRe_AD01[14] < 3.25)
 				{
-					b14 = 4* pTr->dataRe_AD01[14];
+					b14 = 4 * pTr->dataRe_AD01[14];
 				}
 			}
 
-			if (pTr->dataRe_AD01[4] > 0)
+			if (pTr->dataRe_AD01[4] > 3.8)
 			{
-				if (pTr->dataRe_AD01[4] < 5) {
+				if (pTr->dataRe_AD01[4] < 4.2) {
 					b4 = pTr->dataRe_AD01[4] / 2;
 				}
 			}
 			pTr->mRecalFun("²¨¿Ø+12V", b14, b4);
-		//	pTr->mRecalFun("²¨¿Ø+12V", (4 * pTr->dataRe_AD01[14]), pTr->dataRe_AD01[4] / 2);
+			//	pTr->mRecalFun("²¨¿Ø+12V", (4 * pTr->dataRe_AD01[14]), pTr->dataRe_AD01[4] / 2);
 
-			if (pTr->dataRe_AD01[15] > 2)
+			#pragma endregion
+
+			#pragma region ²¨¿Ø+5V
+
+			if (pTr->dataRe_AD01[15] > 2.25)
 			{
-				if (pTr->dataRe_AD01[15] < 3)
+				if (pTr->dataRe_AD01[15] < 2.75)
 				{
 					b15 = 2 * pTr->dataRe_AD01[15];
 				}
@@ -220,16 +235,19 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			if (pTr->dataRe_AD01[5] > 0)
 			{
-				if (pTr->dataRe_AD01[5] < 2) {
+				if (pTr->dataRe_AD01[5] < 0.4) {
 					b5 = pTr->dataRe_AD01[5] / 2;
 				}
 			}
 			pTr->mRecalFun("²¨¿Ø+5V", b15, b5);
-		//	pTr->mRecalFun("²¨¿Ø+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
+			//	pTr->mRecalFun("²¨¿Ø+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
 
-			if (pTr->dataRe_AD01[13] > 1.5)
+			#pragma endregion
+
+			#pragma region ²¨¿Ø-5V
+			if (pTr->dataRe_AD01[13] > 1.8)
 			{
-				if (pTr->dataRe_AD01[13] < 3)
+				if (pTr->dataRe_AD01[13] < 2.2)
 				{
 					b13 = ((4.33*pTr->dataRe_AD01[13]) - 13.33);
 				}
@@ -237,15 +255,17 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			if (pTr->dataRe_AD01[6] > 2.526)
 			{
-				if (pTr->dataRe_AD01[6] < 3.1)
+				if (pTr->dataRe_AD01[6] < 2.65)
 				{
 					b6 = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
 				}
 			}
 			pTr->mRecalFun("²¨¿Ø-5V", b13, b6);
 
-			//		pTr->mRecalFun("²¨¿Ø-5V", ((4.33*pTr->dataRe_AD01[13]) - 13.33), (pTr->dataRe_AD01[6] - 2.526) / 0.555);
+			#pragma endregion
 
+
+			
 
 			//		pTr->mRecalFun("END", 0, 0);
 
