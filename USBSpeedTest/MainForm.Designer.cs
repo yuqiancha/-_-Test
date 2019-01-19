@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -1189,6 +1190,7 @@
             this.textBox_value.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_value.Size = new System.Drawing.Size(145, 48);
             this.textBox_value.TabIndex = 107;
+            this.textBox_value.Text = "01ffffffff100000ffffffffffffffffff0000ffff0000ffff0000ffff0000";
             // 
             // button6
             // 
@@ -1235,6 +1237,7 @@
             this.textBox_value_1d02.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_value_1d02.Size = new System.Drawing.Size(373, 49);
             this.textBox_value_1d02.TabIndex = 107;
+            this.textBox_value_1d02.Text = resources.GetString("textBox_value_1d02.Text");
             // 
             // button9
             // 
@@ -1339,6 +1342,7 @@
             this.textBox_value_1d01.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_value_1d01.Size = new System.Drawing.Size(373, 48);
             this.textBox_value_1d01.TabIndex = 107;
+            this.textBox_value_1d01.Text = resources.GetString("textBox_value_1d01.Text");
             // 
             // button8
             // 
@@ -1431,7 +1435,7 @@
             this.textBox_value_1d04.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_value_1d04.Size = new System.Drawing.Size(148, 49);
             this.textBox_value_1d04.TabIndex = 107;
-            this.textBox_value_1d04.Text = "fffcffff03";
+            this.textBox_value_1d04.Text = "ff3f00f030";
             // 
             // button12
             // 
@@ -1524,7 +1528,7 @@
             this.textBox_value_1d03.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_value_1d03.Size = new System.Drawing.Size(151, 48);
             this.textBox_value_1d03.TabIndex = 107;
-            this.textBox_value_1d03.Text = "3fffffffc0";
+            this.textBox_value_1d03.Text = "00c0ffffc0";
             // 
             // button11
             // 
@@ -1893,6 +1897,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // button3

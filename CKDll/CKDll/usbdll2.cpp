@@ -112,44 +112,123 @@ void myUsbDLL::SendCMD(int addr, int value)
 volatile double dataRe_AD02[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 
 
+
 DWORD WINAPI RetADFun(LPVOID ptr)
 {
 	myUsbDLL* pTr = (myUsbDLL*)(ptr);
 
-
+	double b2 = 0;
+	double b12 = 0;
+	double b9 = 0;
+	double b0 = 0;
+	double b13 = 0;
+	double b6 = 0;
+	double b10 = 0;
+	double b1 = 0;
 	while (pTr->RecvTag)
 	{
 		if (pTr->mRecalFun) {
 
 			pTr->mylock.lock();
 
-		//	pTr->mRecalFun("Ô¤·Å+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+			if (pTr->dataRe_AD01[9] > 3)
+			{
+				if (pTr->dataRe_AD01[9] < 4)
+				{
+					b9 = 2 * pTr->dataRe_AD01[9];
+				}
+			}
 
-		//	pTr->mRecalFun("Ô¤·Å-5V",((4.33*pTr->dataRe_AD01[10]) - 13.33), (pTr->dataRe_AD01[1] - 2.552) / 0.555);
+			if (pTr->dataRe_AD01[0] > 2.506)
+			{
+				if (pTr->dataRe_AD01[0] < 3.1)
+				{
+					b0 = (pTr->dataRe_AD01[0] - 2.506) / 0.555;
+				}
+			}
 
-			pTr->mRecalFun("²¨¿Ø+4V", (2 * pTr->dataRe_AD01[12]), (pTr->dataRe_AD01[2]-2.506) / 0.555);
+			pTr->mRecalFun("Ô¤·Å+7V", b9, b0);
+			//	pTr->mRecalFun("Ô¤·Å+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+
+
+			if (pTr->dataRe_AD01[10] > 1.5)
+			{
+				if (pTr->dataRe_AD01[10] < 3.2)
+				{
+					b10 = ((4.33*pTr->dataRe_AD01[10]) - 13.33);
+				}
+			}
+
+			if (pTr->dataRe_AD01[1] > 2.552)
+			{
+				if (pTr->dataRe_AD01[1] < 3.1) {
+					b1 = (pTr->dataRe_AD01[1] - 2.552) / 0.555;
+				}
+			}
+			pTr->mRecalFun("Ô¤·Å-5V",b10, b1);
+
+
+
+
+			if (pTr->dataRe_AD01[12] > 1.5)
+			{
+				if (pTr->dataRe_AD01[12] < 2.25)
+				{
+					b12 = 2 * pTr->dataRe_AD01[12];
+				}
+			}
+
+			if (pTr->dataRe_AD01[2] > 2.451)
+			{
+				if (pTr->dataRe_AD01[2] < 3)
+				{
+					b2 = (pTr->dataRe_AD01[2] - 2.451) / 0.555;
+				}
+			}
+			pTr->mRecalFun("²¨¿Ø+4V", b12, b2);
+
 
 		//	pTr->mRecalFun("²¨¿Ø+12V", (4 * pTr->dataRe_AD01[14]), pTr->dataRe_AD01[4] / 2);
 
 		//	pTr->mRecalFun("²¨¿Ø+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
 
-		//	pTr->mRecalFun("²¨¿Ø-5V", ((4.33*pTr->dataRe_AD01[13]) - 13.33), (pTr->dataRe_AD01[6] - 2.526) / 0.555);
+			if (pTr->dataRe_AD01[13] > 1.5)
+			{
+				if (pTr->dataRe_AD01[13] < 3.2)
+				{
+					b13 = ((4.33*pTr->dataRe_AD01[13]) - 13.33);
+				}
+			}
 
-		//	pTr->mRecalFun("END", 0, 0);
+			if (pTr->dataRe_AD01[6] > 2.526)
+			{
+				if (pTr->dataRe_AD01[6] < 3.1)
+				b6 = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
+			}
+			pTr->mRecalFun("²¨¿Ø-5V", b13, b6);
 
-			//pTr->mRecalFun("Ô¤·Å+7V", pTr->dataRe_AD01[9], pTr->dataRe_AD01[0]);
+			//		pTr->mRecalFun("²¨¿Ø-5V", ((4.33*pTr->dataRe_AD01[13]) - 13.33), (pTr->dataRe_AD01[6] - 2.526) / 0.555);
 
-			//pTr->mRecalFun("Ô¤·Å-5V", pTr->dataRe_AD01[10], pTr->dataRe_AD01[1]);
 
-			//pTr->mRecalFun("²¨¿Ø+4V", pTr->dataRe_AD01[12], pTr->dataRe_AD01[2]);
+			//		pTr->mRecalFun("END", 0, 0);
 
-			//pTr->mRecalFun("²¨¿Ø+12V", pTr->dataRe_AD01[14], pTr->dataRe_AD01[4]);
 
-			//pTr->mRecalFun("²¨¿Ø+5V", pTr->dataRe_AD01[15], pTr->dataRe_AD01[5]);
 
-			//pTr->mRecalFun("²¨¿Ø-5V", pTr->dataRe_AD01[13], pTr->dataRe_AD01[6]);
 
-			//pTr->mRecalFun("END", 0, 0);
+
+					//pTr->mRecalFun("Ô¤·Å+7V", pTr->dataRe_AD01[9], pTr->dataRe_AD01[0]);
+
+					//pTr->mRecalFun("Ô¤·Å-5V", pTr->dataRe_AD01[10], pTr->dataRe_AD01[1]);
+
+					//pTr->mRecalFun("²¨¿Ø+4V", pTr->dataRe_AD01[12], pTr->dataRe_AD01[2]);
+
+					//pTr->mRecalFun("²¨¿Ø+12V", pTr->dataRe_AD01[14], pTr->dataRe_AD01[4]);
+
+					//pTr->mRecalFun("²¨¿Ø+5V", pTr->dataRe_AD01[15], pTr->dataRe_AD01[5]);
+
+					//pTr->mRecalFun("²¨¿Ø-5V", pTr->dataRe_AD01[13], pTr->dataRe_AD01[6]);
+
+					//pTr->mRecalFun("END", 0, 0);
 
 			pTr->mylock.unlock();
 
@@ -219,7 +298,7 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 								memcpy(adbuf01, bufsav + 4 + i * 682, num);
 								adpos1 += num;
 
-								if (adpos1 >= 100)
+								if (adpos1 >= 20)
 								{
 									pTr->mylock.lock();
 									for (int k = 2; k < 10; k++)
@@ -236,7 +315,6 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 										if ((buf[2 * k] & 0x80) == 0x80)
 										{
 											pTr->dataRe_AD01[k - 2] = -value;
-											//	dataRe_AD02[k - 2] = -value;
 										}
 										else
 										{
@@ -245,8 +323,8 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 										}
 									}
 									pTr->mylock.unlock();
-									memmove(adbuf01, adbuf01 + 100, adpos1 - 100);
-									adpos1 -= 100;
+									memmove(adbuf01, adbuf01 + 20, adpos1 - 20);
+									adpos1 -= 20;
 
 								}
 							}
@@ -256,7 +334,7 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 								memcpy(adbuf02, bufsav + 4 + i * 682, num);
 								adpos2 += num;
 
-								if (adpos2 >= 100)
+								if (adpos2 >= 20)
 								{
 									pTr->mylock.lock();
 									for (int k = 2; k < 10; k++)
@@ -272,18 +350,16 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 										if ((buf[2 * k] & 0x80) == 0x80)
 										{
 											pTr->dataRe_AD01[k - 2 + 8] = -value;
-											//	dataRe_AD02[k - 2+8] = value;
 										}
 										else
 										{
 											pTr->dataRe_AD01[k - 2 + 8] = value;
-											//	dataRe_AD02[k - 2 + 8] = value;
 										}
 									}
 									pTr->mylock.unlock();
 
-									memmove(adbuf02, adbuf02 + 100, adpos2 - 100);
-									adpos2 -= 100;
+									memmove(adbuf02, adbuf02 + 20, adpos2 - 20);
+									adpos2 -= 20;
 								}
 
 							}
@@ -546,7 +622,7 @@ void myUsbDLL::WriteData(unsigned char* buf, long &length)
 	}
 }
 
-void myUsbDLL::WriteData_WithChan(int chan,unsigned char* buf, long &length)
+void myUsbDLL::WriteData_WithChan(int chan, unsigned char* buf, long &length)
 {
 	Register80H = Register80H | 0x02;
 	SendCMD(0x80, Register80H);
@@ -570,23 +646,23 @@ void myUsbDLL::WriteData_WithChan(int chan,unsigned char* buf, long &length)
 	sendbuf[3] = length & 0xff;
 
 	memcpy(sendbuf + 4, buf, length);
-	
-	sendbuf[length + add +4] = 0xC0;
-	sendbuf[length + add +5] = 0xDE;
-	sendbuf[length + add +6] = 0xC0;
-	sendbuf[length + add +7] = 0xDE;
-	sendbuf[length + add +8] = 0xC0;
-	sendbuf[length + add +9] = 0xDE;
-	sendbuf[length + add +10] = 0xC0;
-	sendbuf[length + add +11] = 0xDE;
-	sendbuf[length + add +12] = 0xC0;
-	sendbuf[length + add +13] = 0xDE;
-	sendbuf[length + add +14] = 0xC0;
-	sendbuf[length + add +15] = 0xDE;
-	sendbuf[length + add +16] = 0xC0;
-	sendbuf[length + add +17] = 0xDE;
-	sendbuf[length + add +18] = 0xC0;
-	sendbuf[length + add +19] = 0xDE;
+
+	sendbuf[length + add + 4] = 0xC0;
+	sendbuf[length + add + 5] = 0xDE;
+	sendbuf[length + add + 6] = 0xC0;
+	sendbuf[length + add + 7] = 0xDE;
+	sendbuf[length + add + 8] = 0xC0;
+	sendbuf[length + add + 9] = 0xDE;
+	sendbuf[length + add + 10] = 0xC0;
+	sendbuf[length + add + 11] = 0xDE;
+	sendbuf[length + add + 12] = 0xC0;
+	sendbuf[length + add + 13] = 0xDE;
+	sendbuf[length + add + 14] = 0xC0;
+	sendbuf[length + add + 15] = 0xDE;
+	sendbuf[length + add + 16] = 0xC0;
+	sendbuf[length + add + 17] = 0xDE;
+	sendbuf[length + add + 18] = 0xC0;
+	sendbuf[length + add + 19] = 0xDE;
 
 	LONG sendlen = SendSize;
 
@@ -821,7 +897,7 @@ bool __stdcall  myUsbDLL::Fun_DY1()
 	buf[4] = 0xc0;
 
 	WriteData_DY1(buf, bytesToWrite);
-	
+
 	return true;
 }
 

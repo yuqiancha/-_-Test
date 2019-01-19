@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using ZedGraph;
 
 namespace USBSpeedTest
 {
@@ -839,7 +838,14 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 {
                     Data.dt_AD01.Rows[i]["测量值"] = Data.daRe_AD01[i];
                     Data.dt_AD02.Rows[i]["测量值"] = Data.daRe_AD02[i];
+                  
                 }
+
+
+                Data.MyPane.CurveList[2].AddPoint(Data.PaneCount, (Data.daRe_AD01[2]-2.506)/0.555);
+                Data.MyPane.CurveList[11].AddPoint(Data.PaneCount, 2*Data.daRe_AD02[4]);
+
+                Data.PaneCount++;
             }
 
         }

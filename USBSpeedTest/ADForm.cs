@@ -15,7 +15,39 @@ namespace USBSpeedTest
 
         public ADForm()
         {
-            InitializeComponent();         
+            InitializeComponent();
+
+            Data.MyPane = zedGraphControl1.GraphPane;
+            Data.MyPane.Title.Text = "AD显示表";
+            Data.MyPane.XAxis.Title.Text = "时间";
+            Data.MyPane.YAxis.Title.Text = "值";
+            double[] x = new double[100];
+            double[] y = new double[100];
+            for (int i = 0; i < 1; i++)
+            {
+                x[i] = 0;
+                y[i] = 0;
+            }
+
+            if (Data.MyPane.CurveList != null)
+                Data.MyPane.CurveList.Clear();
+
+            Data.MyPane.AddCurve("AD1", x, y, Color.Red, SymbolType.Square);
+            Data.MyPane.AddCurve("AD2", x, y, Color.Gold, SymbolType.Square);
+            Data.MyPane.AddCurve("AD3", x, y, Color.Green, SymbolType.Square);
+            Data.MyPane.AddCurve("AD4", x, y, Color.Blue, SymbolType.Square);
+            Data.MyPane.AddCurve("AD5", x, y, Color.Red, SymbolType.Square);
+            Data.MyPane.AddCurve("AD6", x, y, Color.Gold, SymbolType.Square);
+            Data.MyPane.AddCurve("AD7", x, y, Color.Green, SymbolType.Square);
+            Data.MyPane.AddCurve("AD8", x, y, Color.Blue, SymbolType.Square);
+            Data.MyPane.AddCurve("AD9", x, y, Color.Red, SymbolType.Square);
+            Data.MyPane.AddCurve("AD10", x, y, Color.Gold, SymbolType.Square);
+            Data.MyPane.AddCurve("AD11", x, y, Color.Green, SymbolType.Square);
+            Data.MyPane.AddCurve("AD12", x, y, Color.Blue, SymbolType.Square);
+            Data.MyPane.AddCurve("AD13", x, y, Color.Red, SymbolType.Square);
+            Data.MyPane.AddCurve("AD14", x, y, Color.Gold, SymbolType.Square);
+            Data.MyPane.AddCurve("AD15", x, y, Color.Green, SymbolType.Square);
+            Data.MyPane.AddCurve("AD16", x, y, Color.Blue, SymbolType.Square);
 
         }
 
@@ -38,7 +70,17 @@ namespace USBSpeedTest
         private void ADForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Data.AdFrmIsAlive = false;
+            this.Dispose();
+            zedGraphControl1.Dispose();
         }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (Data.AdFrmIsAlive)
+            {
+                zedGraphControl1.AxisChange();
+                zedGraphControl1.Invalidate();
+            }
+        }
     }
 }
