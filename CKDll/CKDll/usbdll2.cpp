@@ -125,6 +125,10 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 	double b6 = 0;
 	double b10 = 0;
 	double b1 = 0;
+	double b14 = 0;
+	double b15 = 0;
+	double b4 = 0;
+	double b5 = 0;
 	while (pTr->RecvTag)
 	{
 		if (pTr->mRecalFun) {
@@ -188,13 +192,44 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			pTr->mRecalFun("²¨¿Ø+4V", b12, b2);
 
 
+
+			if (pTr->dataRe_AD01[14] > 2.5)
+			{
+				if (pTr->dataRe_AD01[14] < 3.5)
+				{
+					b14 = 4* pTr->dataRe_AD01[14];
+				}
+			}
+
+			if (pTr->dataRe_AD01[4] > 0)
+			{
+				if (pTr->dataRe_AD01[4] < 5) {
+					b4 = pTr->dataRe_AD01[4] / 2;
+				}
+			}
+			pTr->mRecalFun("²¨¿Ø+12V", b14, b4);
 		//	pTr->mRecalFun("²¨¿Ø+12V", (4 * pTr->dataRe_AD01[14]), pTr->dataRe_AD01[4] / 2);
 
+			if (pTr->dataRe_AD01[15] > 2)
+			{
+				if (pTr->dataRe_AD01[15] < 3)
+				{
+					b15 = 2 * pTr->dataRe_AD01[15];
+				}
+			}
+
+			if (pTr->dataRe_AD01[5] > 0)
+			{
+				if (pTr->dataRe_AD01[5] < 2) {
+					b5 = pTr->dataRe_AD01[5] / 2;
+				}
+			}
+			pTr->mRecalFun("²¨¿Ø+5V", b15, b5);
 		//	pTr->mRecalFun("²¨¿Ø+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
 
 			if (pTr->dataRe_AD01[13] > 1.5)
 			{
-				if (pTr->dataRe_AD01[13] < 3.2)
+				if (pTr->dataRe_AD01[13] < 3)
 				{
 					b13 = ((4.33*pTr->dataRe_AD01[13]) - 13.33);
 				}
@@ -203,7 +238,9 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			if (pTr->dataRe_AD01[6] > 2.526)
 			{
 				if (pTr->dataRe_AD01[6] < 3.1)
-				b6 = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
+				{
+					b6 = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
+				}
 			}
 			pTr->mRecalFun("²¨¿Ø-5V", b13, b6);
 
