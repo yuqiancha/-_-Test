@@ -841,9 +841,11 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                   
                 }
 
+                Data.MyPane.CurveList[2].AddPoint(Data.PaneCount, Data.daRe_AD01[2]);
+                Data.MyPane.CurveList[12].AddPoint(Data.PaneCount, Data.daRe_AD02[4]);
 
-                Data.MyPane.CurveList[2].AddPoint(Data.PaneCount, (Data.daRe_AD01[2]-2.506)/0.555);
-                Data.MyPane.CurveList[11].AddPoint(Data.PaneCount, 2*Data.daRe_AD02[4]);
+                //Data.MyPane.CurveList[2].AddPoint(Data.PaneCount, (Data.daRe_AD01[2]-2.506)/0.555);
+                //Data.MyPane.CurveList[11].AddPoint(Data.PaneCount, 2*Data.daRe_AD02[4]);
 
                 Data.PaneCount++;
             }

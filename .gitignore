@@ -260,3 +260,8 @@ paket-files/
 __pycache__/
 *.pyc
 *.csproj
+*.dat
+*.rar
+UsbApi/UsbApiDemo/CKDll.iobj
+UsbApi/UsbApiDemo/CKDll.ipdb
+*.iobj

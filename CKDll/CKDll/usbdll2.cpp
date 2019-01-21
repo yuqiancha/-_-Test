@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "usbdll2.h"
 
-
 IAntennaInterface*  CreateAntennInstance() {
 	return new myUsbDLL;
 }
@@ -133,126 +132,141 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			pTr->mylock.lock();
 
 #pragma region Ô¤·Å+7V
-			if (pTr->dataRe_AD01[9] > 3)
-			{
-				if (pTr->dataRe_AD01[9] < 4)
-				{
-					b9 = 2 * pTr->dataRe_AD01[9];
-				}
-			}
+			////if (pTr->dataRe_AD01[9] > 3)
+			////{
+			////	if (pTr->dataRe_AD01[9] < 4)
+			////	{
+			////		b9 = 2 * pTr->dataRe_AD01[9];
+			////	}
+			////}
 
-			if (pTr->dataRe_AD01[0] > 2.506)
-			{
-				if (pTr->dataRe_AD01[0] < 2.6)
-				{
-					b0 = (pTr->dataRe_AD01[0] - 2.506) / 0.555;
-				}
-			}
+			////if (pTr->dataRe_AD01[0] > 2.506)
+			////{
+			////	if (pTr->dataRe_AD01[0] < 2.6)
+			////	{
+			////		b0 = (pTr->dataRe_AD01[0] - 2.506) / 0.555;
+			////	}
+			////}
 
-			pTr->mRecalFun("Ô¤·Å+7V", b9, b0);
-			//	pTr->mRecalFun("Ô¤·Å+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+			////pTr->mRecalFun("Ô¤·Å+7V", b9, b0);
+
 #pragma endregion
 
 #pragma region Ô¤·Å-5V
 
-			if (pTr->dataRe_AD01[10] > 1.8)
-			{
-				if (pTr->dataRe_AD01[10] < 2.2)
-				{
-					b10 = ((4.33*pTr->dataRe_AD01[10]) - 13.33);
-				}
-			}
+			////if (pTr->dataRe_AD01[10] > 1.8)
+			////{
+			////	if (pTr->dataRe_AD01[10] < 2.2)
+			////	{
+			////		b10 = ((4.33*pTr->dataRe_AD01[10]) - 13.33);
+			////	}
+			////}
 
-			if (pTr->dataRe_AD01[1] > 2.552)
-			{
-				if (pTr->dataRe_AD01[1] < 2.65) {
-					b1 = (pTr->dataRe_AD01[1] - 2.552) / 0.555;
-				}
-			}
-			pTr->mRecalFun("Ô¤·Å-5V", b10, b1);
+			////if (pTr->dataRe_AD01[1] > 2.552)
+			////{
+			////	if (pTr->dataRe_AD01[1] < 2.65) {
+			////		b1 = (pTr->dataRe_AD01[1] - 2.552) / 0.555;
+			////	}
+			////}
+			////pTr->mRecalFun("Ô¤·Å-5V", b10, b1);
+
+
 
 #pragma endregion
 
 #pragma region ²¨¿Ø+4V
-			if (pTr->dataRe_AD01[12] > 1.5)
-			{
-				if (pTr->dataRe_AD01[12] < 2.25)
-				{
-					b12 = 2 * pTr->dataRe_AD01[12];
-				}
-			}
+			////if (pTr->dataRe_AD01[12] > 1.5)
+			////{
+			////	if (pTr->dataRe_AD01[12] < 2.25)
+			////	{
+			////		b12 = 2 * pTr->dataRe_AD01[12];
+			////	}
+			////}
 
-			if (pTr->dataRe_AD01[2] > 2.451)
-			{
-				if (pTr->dataRe_AD01[2] < 2.73)
-				{
-					b2 = (pTr->dataRe_AD01[2] - 2.451) / 0.555;
-				}
-			}
-			pTr->mRecalFun("²¨¿Ø+4V", b12, b2);
+			////if (pTr->dataRe_AD01[2] > 2.451)
+			////{
+			////	if (pTr->dataRe_AD01[2] < 2.73)
+			////	{
+			////		b2 = (pTr->dataRe_AD01[2] - 2.451) / 0.555;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø+4V", b12, b2);
+
+
 #pragma endregion
 
 #pragma region ²¨¿Ø+12V
 
-			if (pTr->dataRe_AD01[14] > 2.75)
-			{
-				if (pTr->dataRe_AD01[14] < 3.25)
-				{
-					b14 = 4 * pTr->dataRe_AD01[14];
-				}
-			}
+			////if (pTr->dataRe_AD01[14] > 2.75)
+			////{
+			////	if (pTr->dataRe_AD01[14] < 3.25)
+			////	{
+			////		b14 = 4 * pTr->dataRe_AD01[14];
+			////	}
+			////}
 
-			if (pTr->dataRe_AD01[4] > 3.8)
-			{
-				if (pTr->dataRe_AD01[4] < 4.2) {
-					b4 = pTr->dataRe_AD01[4] / 2;
-				}
-			}
-			pTr->mRecalFun("²¨¿Ø+12V", b14, b4);
-			//	pTr->mRecalFun("²¨¿Ø+12V", (4 * pTr->dataRe_AD01[14]), pTr->dataRe_AD01[4] / 2);
+			////if (pTr->dataRe_AD01[4] > 3.8)
+			////{
+			////	if (pTr->dataRe_AD01[4] < 4.2) {
+			////		b4 = pTr->dataRe_AD01[4] / 2;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø+12V", b14, b4);
+
+
 
 #pragma endregion
 
 #pragma region ²¨¿Ø+5V
 
-			if (pTr->dataRe_AD01[15] > 2.25)
-			{
-				if (pTr->dataRe_AD01[15] < 2.75)
-				{
-					b15 = 2 * pTr->dataRe_AD01[15];
-				}
-			}
+			////if (pTr->dataRe_AD01[15] > 2.25)
+			////{
+			////	if (pTr->dataRe_AD01[15] < 2.75)
+			////	{
+			////		b15 = 2 * pTr->dataRe_AD01[15];
+			////	}
+			////}
 
-			if (pTr->dataRe_AD01[5] > 0)
-			{
-				if (pTr->dataRe_AD01[5] < 0.4) {
-					b5 = pTr->dataRe_AD01[5] / 2;
-				}
-			}
-			pTr->mRecalFun("²¨¿Ø+5V", b15, b5);
-			//	pTr->mRecalFun("²¨¿Ø+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
+			////if (pTr->dataRe_AD01[5] > 0)
+			////{
+			////	if (pTr->dataRe_AD01[5] < 0.4) {
+			////		b5 = pTr->dataRe_AD01[5] / 2;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø+5V", b15, b5);
+
+
 
 #pragma endregion
 
 #pragma region ²¨¿Ø-5V
-			if (pTr->dataRe_AD01[13] > 1.8)
-			{
-				if (pTr->dataRe_AD01[13] < 2.2)
-				{
-					b13 = ((4.33*pTr->dataRe_AD01[13]) - 13.33);
-				}
-			}
+			////if (pTr->dataRe_AD01[13] > 1.8)
+			////{
+			////	if (pTr->dataRe_AD01[13] < 2.2)
+			////	{
+			////		b13 = ((4.33*pTr->dataRe_AD01[13]) - 13.33);
+			////	}
+			////}
 
-			if (pTr->dataRe_AD01[6] > 2.526)
-			{
-				if (pTr->dataRe_AD01[6] < 2.65)
-				{
-					b6 = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
-				}
-			}
-			pTr->mRecalFun("²¨¿Ø-5V", b13, b6);
+			////if (pTr->dataRe_AD01[6] > 2.526)
+			////{
+			////	if (pTr->dataRe_AD01[6] < 2.65)
+			////	{
+			////		b6 = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø-5V", b13, b6);
 
 #pragma endregion
+
+			pTr->mRecalFun("Ô¤·Å+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+			pTr->mRecalFun("Ô¤·Å-5V", (4.33*pTr->dataRe_AD01[10]) - 13.33, (pTr->dataRe_AD01[1] - 2.552) / 0.555);
+
+			pTr->mRecalFun("²¨¿Ø+4V", 2 * pTr->dataRe_AD01[12], (pTr->dataRe_AD01[2] - 2.451) / 0.555);
+
+			pTr->mRecalFun("²¨¿Ø+12V", (4 * pTr->dataRe_AD01[14]), pTr->dataRe_AD01[4] / 2);
+			pTr->mRecalFun("²¨¿Ø+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
+			pTr->mRecalFun("²¨¿Ø-5V", (4.33*pTr->dataRe_AD01[13]) - 13.33, (pTr->dataRe_AD01[6] - 2.526) / 0.555);
 
 			//bool ErrorDetected;
 			//if (ErrorDetected) {
@@ -260,19 +274,19 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			//	int ErrorCode2;
 			//	pTr->mRecalFun("Ð£ÑéÂëERROR", ErrorCode1, ErrorCode2);
 			//}
-					//pTr->mRecalFun("Ô¤·Å+7V", pTr->dataRe_AD01[9], pTr->dataRe_AD01[0]);
+			//pTr->mRecalFun("Ô¤·Å+7V", pTr->dataRe_AD01[9], pTr->dataRe_AD01[0]);
 
-					//pTr->mRecalFun("Ô¤·Å-5V", pTr->dataRe_AD01[10], pTr->dataRe_AD01[1]);
+			//pTr->mRecalFun("Ô¤·Å-5V", pTr->dataRe_AD01[10], pTr->dataRe_AD01[1]);
 
-					//pTr->mRecalFun("²¨¿Ø+4V", pTr->dataRe_AD01[12], pTr->dataRe_AD01[2]);
+			//pTr->mRecalFun("²¨¿Ø+4V", pTr->dataRe_AD01[12], pTr->dataRe_AD01[2]);
 
-					//pTr->mRecalFun("²¨¿Ø+12V", pTr->dataRe_AD01[14], pTr->dataRe_AD01[4]);
+			//pTr->mRecalFun("²¨¿Ø+12V", pTr->dataRe_AD01[14], pTr->dataRe_AD01[4]);
 
-					//pTr->mRecalFun("²¨¿Ø+5V", pTr->dataRe_AD01[15], pTr->dataRe_AD01[5]);
+			//pTr->mRecalFun("²¨¿Ø+5V", pTr->dataRe_AD01[15], pTr->dataRe_AD01[5]);
 
-					//pTr->mRecalFun("²¨¿Ø-5V", pTr->dataRe_AD01[13], pTr->dataRe_AD01[6]);
+			//pTr->mRecalFun("²¨¿Ø-5V", pTr->dataRe_AD01[13], pTr->dataRe_AD01[6]);
 
-					//pTr->mRecalFun("END", 0, 0);
+			//pTr->mRecalFun("END", 0, 0);
 
 			pTr->mylock.unlock();
 
@@ -284,8 +298,6 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 
 }
-
-
 
 DWORD WINAPI GetDataFun(LPVOID ptr)
 {
@@ -311,6 +323,41 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 	pTr->Register80H = pTr->Register80H | 0x04;
 	pTr->SendCMD(0x80, pTr->Register80H);
 
+	char path[128];
+	GetCurrentDirectoryA(128, path);
+	string temp = path;
+	string SYSTEMPATH = temp + "\\";
+	SYSTEMTIME st;
+	GetLocalTime(&st);
+	FILE *fileFF01;
+	FILE *fileFF02;
+
+	//string tt = nullptr;
+	//char array[10];
+
+	//_itoa_s(st.wYear, array, 10);
+	//tt = tt + array + "y";
+	//_itoa_s(st.wMonth, array, 10);
+	//tt = tt + array + "M";
+	//_itoa_s(st.wDay, array, 10);
+	//tt = tt + array + "d";
+
+
+	//_itoa_s(st.wHour, array, 10);
+	//tt = tt + array + "t";
+	//_itoa_s(st.wMinute, array, 10);
+	//tt = tt + array + "m";
+	//_itoa_s(st.wSecond, array, 10);
+	//tt = tt + array + "s";
+
+	string tempstrFF01 = SYSTEMPATH + "1d06.dat";
+	string tempstrFF02 = SYSTEMPATH + "1d07.dat";
+
+	fopen_s(&fileFF01, tempstrFF01.c_str(), "wb+");
+	fopen_s(&fileFF02, tempstrFF02.c_str(), "wb+");
+
+	queue<unsigned char> que06;
+	queue<unsigned char> que07;
 	while (pTr->RecvTag)
 	{
 
@@ -341,59 +388,141 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 								if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x06)
 								{
 									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//ÓÐÐ§Î»
-									memcpy(adbuf01, bufsav + 4 + i * 682, num);
-									adpos1 += num;
 
-									if (adpos1 >= 20)
+									try {
+										fwrite(bufsav + i * 682 + 4, sizeof(char), num, fileFF01);
+										fflush(fileFF01);
+									}
+									catch (exception &e)
 									{
-										pTr->mylock.lock();
+										printf(e.what());
+									}
+
+									pTr->mylock.lock();
+									for (int j = 0; j < num; j++)
+									{
+										que06.push(bufsav[4 + i * 682 + j]);
+									}
+									if (que06.size() >= 20)
+									{
+										unsigned char *buf06 = (unsigned char *)malloc(20 * sizeof(char));
+
+										for (int t = 0; t < 20; t++)
+										{
+											buf06[t] = que06.front();
+											que06.pop();
+										}
+
 										for (int k = 2; k < 10; k++)
 										{
-											int temp = (adbuf01[2 * k] & 0x7f) * 256 + adbuf01[2 * k + 1];
+											int temp = (buf06[2 * k] & 0x7f) * 256 + buf06[2 * k + 1];
 
-											if ((adbuf01[2 * k] & 0x80) == 0x80)
+											if ((buf06[2 * k] & 0x80) == 0x80)
 											{
 												temp = 0x8000 - temp;
 											}
 											value = temp;
 											value = 10 * (value / 32767);
 
-											if ((buf[2 * k] & 0x80) == 0x80)
+											if ((buf06[2 * k] & 0x80) == 0x80)
 											{
 												pTr->dataRe_AD01[k - 2] = -value;
 											}
 											else
 											{
 												pTr->dataRe_AD01[k - 2] = value;
-												//	dataRe_AD02[k - 2] = value;
+											}
+
+											if (k == 4) {
+												if ((pTr->dataRe_AD01[k - 2] < 2) || (pTr->dataRe_AD01[k - 2] > 3))
+												{
+													printf("Here is Error %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x\n", buf06[0], buf06[1], buf06[2], buf06[3], buf06[4], buf06[5], buf06[6], buf06[7], buf06[8], buf06[9], buf06[10],
+														buf06[11], buf06[12], buf06[13], buf06[14], buf06[15], buf06[16], buf06[17], buf06[18], buf06[19]);
+												}
 											}
 										}
-										pTr->mylock.unlock();
-										memmove(adbuf01, adbuf01 + 20, adpos1 - 20);
-										adpos1 -= 20;
-
+										free(buf06);
+										buf06 = NULL;
 									}
+									//memcpy(adbuf01, bufsav + 4 + i * 682, num);
+									//adpos1 += num;
+									//if (adpos1 >= 20)
+									//{										
+									//	for (int k = 2; k < 10; k++)
+									//	{
+									//		int temp = (adbuf01[2 * k] & 0x7f) * 256 + adbuf01[2 * k + 1];
+
+									//		if ((adbuf01[2 * k] & 0x80) == 0x80)
+									//		{
+									//			temp = 0x8000 - temp;
+									//		}
+									//		value = temp;
+									//		value = 10 * (value / 32767);
+
+									//		if ((buf[2 * k] & 0x80) == 0x80)
+									//		{
+									//			pTr->dataRe_AD01[k - 2] = -value;
+									//		}
+									//		else
+									//		{
+									//			pTr->dataRe_AD01[k - 2] = value;
+									//			//	dataRe_AD02[k - 2] = value;
+									//		}
+
+									//		if (k == 4) {
+									//			if ((pTr->dataRe_AD01[k - 2] < 2) || (pTr->dataRe_AD01[k - 2] > 3))
+									//			{
+									//				printf("Here is Error %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x\n", adbuf01[0], adbuf01[1], adbuf01[2], adbuf01[3], adbuf01[4], adbuf01[5], adbuf01[6], adbuf01[7], adbuf01[8], adbuf01[9], adbuf01[10],
+									//					adbuf01[11], adbuf01[12], adbuf01[13], adbuf01[14], adbuf01[15], adbuf01[16], adbuf01[17], adbuf01[18], adbuf01[19]);
+									//			}
+									//		}
+									//	}										
+									//	memmove(adbuf01, adbuf01 + 20, adpos1 - 20);
+									//	adpos1 -= 20;
+
+									pTr->mylock.unlock();
 								}
 								else if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x07)
 								{
 									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//ÓÐÐ§Î»
-									memcpy(adbuf02, bufsav + 4 + i * 682, num);
-									adpos2 += num;
 
-									if (adpos2 >= 20)
+									try {
+										fwrite(bufsav + i * 682 + 4, sizeof(char), num, fileFF02);
+										fflush(fileFF02);
+									}
+									catch (exception &e)
 									{
-										pTr->mylock.lock();
+										printf(e.what());
+									}
+
+									pTr->mylock.lock();
+
+									for (int j = 0; j < num; j++)
+									{
+										que07.push(bufsav[4 + i * 682 + j]);
+									}
+									if (que07.size() >= 20)
+									{
+										unsigned char *buf07 = (unsigned char *)malloc(20 * sizeof(char));
+
+										for (int t = 0; t < 20; t++)
+										{
+											buf07[t] = que07.front();
+											que07.pop();
+										}
+
 										for (int k = 2; k < 10; k++)
 										{
-											int temp = (adbuf02[2 * k] & 0x7f) * 256 + adbuf02[2 * k + 1];
+											int temp = (buf07[2 * k] & 0x7f) * 256 + buf07[2 * k + 1];
 
-											if ((adbuf02[2 * k] & 0x80) == 0x80)
+											if ((buf07[2 * k] & 0x80) == 0x80)
 											{
 												temp = 0x8000 - temp;
 											}
 											value = temp;
 											value = 10 * (value / 32767);
-											if ((buf[2 * k] & 0x80) == 0x80)
+
+											if ((buf07[2 * k] & 0x80) == 0x80)
 											{
 												pTr->dataRe_AD01[k - 2 + 8] = -value;
 											}
@@ -401,13 +530,55 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 											{
 												pTr->dataRe_AD01[k - 2 + 8] = value;
 											}
-										}
-										pTr->mylock.unlock();
 
-										memmove(adbuf02, adbuf02 + 20, adpos2 - 20);
-										adpos2 -= 20;
+											if (k == 4) {
+												if ((pTr->dataRe_AD01[k - 2] < 2) || (pTr->dataRe_AD01[k - 2] > 3))
+												{
+													printf("Here is Error %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x\n", buf07[0], buf07[1], buf07[2], buf07[3], buf07[4], buf07[5], buf07[6], buf07[7], buf07[8], buf07[9], buf07[10],
+														buf07[11], buf07[12], buf07[13], buf07[14], buf07[15], buf07[16], buf07[17], buf07[18], buf07[19]);
+												}
+											}
+										}
+										free(buf07);
+										buf07 = NULL;
 									}
 
+									/*	memcpy(adbuf02, bufsav + 4 + i * 682, num);
+										adpos2 += num;
+										if (adpos2 >= 20)
+										{
+
+											for (int k = 2; k < 10; k++)
+											{
+												int temp = (adbuf02[2 * k] & 0x7f) * 256 + adbuf02[2 * k + 1];
+
+												if ((adbuf02[2 * k] & 0x80) == 0x80)
+												{
+													temp = 0x8000 - temp;
+												}
+												value = temp;
+												value = 10 * (value / 32767);
+												if ((buf[2 * k] & 0x80) == 0x80)
+												{
+													pTr->dataRe_AD01[k - 2 + 8] = -value;
+												}
+												else
+												{
+													pTr->dataRe_AD01[k - 2 + 8] = value;
+												}
+
+												if (k == 6) {
+													if ((pTr->dataRe_AD01[12] < 2) || (pTr->dataRe_AD01[12] > 3))
+													{
+														printf("Here is Error22 %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x\n", adbuf01[0], adbuf01[1], adbuf01[2], adbuf01[3], adbuf01[4], adbuf01[5], adbuf01[6], adbuf01[7], adbuf01[8], adbuf01[9], adbuf01[10],
+															adbuf01[11], adbuf01[12], adbuf01[13], adbuf01[14], adbuf01[15], adbuf01[16], adbuf01[17], adbuf01[18], adbuf01[19]);
+													}
+												}
+											}
+											memmove(adbuf02, adbuf02 + 20, adpos2 - 20);
+											adpos2 -= 20;
+										}*/
+									pTr->mylock.unlock();
 								}
 								else
 								{
@@ -417,7 +588,7 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 							}
 
 							free(bufsav);
-							bufsav = nullptr;
+							bufsav = NULL;
 						}
 
 						memmove(dealbuf, dealbuf + 4096, pos - 4096);

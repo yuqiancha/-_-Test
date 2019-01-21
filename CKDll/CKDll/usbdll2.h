@@ -94,7 +94,7 @@ public:
 
 	mutex mylock;
 
-	mutex cmdlock;
+	mutex cmdlock;	
 
 	VoltageAndCurrentFun  mRecalFun{ nullptr };
 	bool RecvTag = true;
