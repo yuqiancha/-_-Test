@@ -89,7 +89,6 @@ void myUsbDLL::SendCMD(int addr, int value)
 		ControlEndPoint->Direction = DIR_FROM_DEVICE;
 		ControlEndPoint->Index = 0;
 
-
 		ControlEndPoint->ReqCode = addr;
 		ControlEndPoint->Value = value;
 
@@ -110,8 +109,6 @@ void myUsbDLL::SendCMD(int addr, int value)
 }
 
 volatile double dataRe_AD02[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-
-
 
 DWORD WINAPI RetADFun(LPVOID ptr)
 {
@@ -135,7 +132,7 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			pTr->mylock.lock();
 
-			#pragma region 预放+7V
+#pragma region 预放+7V
 			if (pTr->dataRe_AD01[9] > 3)
 			{
 				if (pTr->dataRe_AD01[9] < 4)
@@ -154,10 +151,9 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 
 			pTr->mRecalFun("预放+7V", b9, b0);
 			//	pTr->mRecalFun("预放+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
-			#pragma endregion
+#pragma endregion
 
-
-			#pragma region 预放-5V
+#pragma region 预放-5V
 
 			if (pTr->dataRe_AD01[10] > 1.8)
 			{
@@ -175,12 +171,9 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			}
 			pTr->mRecalFun("预放-5V", b10, b1);
 
-			#pragma endregion
+#pragma endregion
 
-
-
-
-			#pragma region 波控+4V
+#pragma region 波控+4V
 			if (pTr->dataRe_AD01[12] > 1.5)
 			{
 				if (pTr->dataRe_AD01[12] < 2.25)
@@ -197,12 +190,9 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 				}
 			}
 			pTr->mRecalFun("波控+4V", b12, b2);
-			#pragma endregion
+#pragma endregion
 
-
-
-
-			#pragma region 波控+12V
+#pragma region 波控+12V
 
 			if (pTr->dataRe_AD01[14] > 2.75)
 			{
@@ -221,9 +211,9 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			pTr->mRecalFun("波控+12V", b14, b4);
 			//	pTr->mRecalFun("波控+12V", (4 * pTr->dataRe_AD01[14]), pTr->dataRe_AD01[4] / 2);
 
-			#pragma endregion
+#pragma endregion
 
-			#pragma region 波控+5V
+#pragma region 波控+5V
 
 			if (pTr->dataRe_AD01[15] > 2.25)
 			{
@@ -242,9 +232,9 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			pTr->mRecalFun("波控+5V", b15, b5);
 			//	pTr->mRecalFun("波控+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
 
-			#pragma endregion
+#pragma endregion
 
-			#pragma region 波控-5V
+#pragma region 波控-5V
 			if (pTr->dataRe_AD01[13] > 1.8)
 			{
 				if (pTr->dataRe_AD01[13] < 2.2)
@@ -262,17 +252,14 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 			}
 			pTr->mRecalFun("波控-5V", b13, b6);
 
-			#pragma endregion
+#pragma endregion
 
-
-			
-
-			//		pTr->mRecalFun("END", 0, 0);
-
-
-
-
-
+			//bool ErrorDetected;
+			//if (ErrorDetected) {
+			//	int ErrorCode1;
+			//	int ErrorCode2;
+			//	pTr->mRecalFun("校验码ERROR", ErrorCode1, ErrorCode2);
+			//}
 					//pTr->mRecalFun("预放+7V", pTr->dataRe_AD01[9], pTr->dataRe_AD01[0]);
 
 					//pTr->mRecalFun("预放-5V", pTr->dataRe_AD01[10], pTr->dataRe_AD01[1]);
@@ -324,135 +311,140 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 	pTr->Register80H = pTr->Register80H | 0x04;
 	pTr->SendCMD(0x80, pTr->Register80H);
 
-	while (pTr->RecvTag) {
-		count++;
-		unsigned char * buf = (unsigned char *)malloc(4096 * sizeof(char));
-		LONG length = 4096;
+	while (pTr->RecvTag)
+	{
 
-		if (pTr->BulkInEpt)
-		{
-			pTr->BulkInEpt->XferData(buf, length);	//读出到PC
+		try {
+			count++;
+			unsigned char * buf = (unsigned char *)malloc(4096 * sizeof(char));
+			LONG length = 4096;
 
-			if (length > 0)
-			{//全速读取
-				memcpy(dealbuf + pos, buf, length);
-				pos += length;
-				if (pos >= 4096)
-				{
-					//		printf("Seq:%d %d ReturnLen = %d %x %x %x %x \n", count, pos / 4096, length, dealbuf[0], dealbuf[1], dealbuf[2], dealbuf[3]);
+			if (pTr->BulkInEpt)
+			{
+				pTr->BulkInEpt->XferData(buf, length);	//读出到PC
 
-
-					if (dealbuf[0] == 0xff && dealbuf[1] == 0x08)
+				if (length > 0)
+				{//全速读取
+					memcpy(dealbuf + pos, buf, length);
+					pos += length;
+					if (pos >= 4096)
 					{
-						unsigned char *bufsav = (unsigned char *)malloc(4092 * sizeof(char));
-						memcpy(bufsav, dealbuf + 4, 4092);
+						//		printf("Seq:%d %d ReturnLen = %d %x %x %x %x \n", count, pos / 4096, length, dealbuf[0], dealbuf[1], dealbuf[2], dealbuf[3]);
 
-						for (int i = 0; i < 6; i++)
+						if (dealbuf[0] == 0xff && dealbuf[1] == 0x08)
 						{
-							if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x06)
+							unsigned char *bufsav = (unsigned char *)malloc(4092 * sizeof(char));
+							memcpy(bufsav, dealbuf + 4, 4092);
+
+							for (int i = 0; i < 6; i++)
 							{
-								int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
-								memcpy(adbuf01, bufsav + 4 + i * 682, num);
-								adpos1 += num;
-
-								if (adpos1 >= 20)
+								if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x06)
 								{
-									pTr->mylock.lock();
-									for (int k = 2; k < 10; k++)
+									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
+									memcpy(adbuf01, bufsav + 4 + i * 682, num);
+									adpos1 += num;
+
+									if (adpos1 >= 20)
 									{
-										int temp = (adbuf01[2 * k] & 0x7f) * 256 + adbuf01[2 * k + 1];
+										pTr->mylock.lock();
+										for (int k = 2; k < 10; k++)
+										{
+											int temp = (adbuf01[2 * k] & 0x7f) * 256 + adbuf01[2 * k + 1];
 
-										if ((adbuf01[2 * k] & 0x80) == 0x80)
-										{
-											temp = 0x8000 - temp;
-										}
-										value = temp;
-										value = 10 * (value / 32767);
+											if ((adbuf01[2 * k] & 0x80) == 0x80)
+											{
+												temp = 0x8000 - temp;
+											}
+											value = temp;
+											value = 10 * (value / 32767);
 
-										if ((buf[2 * k] & 0x80) == 0x80)
-										{
-											pTr->dataRe_AD01[k - 2] = -value;
+											if ((buf[2 * k] & 0x80) == 0x80)
+											{
+												pTr->dataRe_AD01[k - 2] = -value;
+											}
+											else
+											{
+												pTr->dataRe_AD01[k - 2] = value;
+												//	dataRe_AD02[k - 2] = value;
+											}
 										}
-										else
-										{
-											pTr->dataRe_AD01[k - 2] = value;
-											//	dataRe_AD02[k - 2] = value;
-										}
+										pTr->mylock.unlock();
+										memmove(adbuf01, adbuf01 + 20, adpos1 - 20);
+										adpos1 -= 20;
+
 									}
-									pTr->mylock.unlock();
-									memmove(adbuf01, adbuf01 + 20, adpos1 - 20);
-									adpos1 -= 20;
+								}
+								else if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x07)
+								{
+									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
+									memcpy(adbuf02, bufsav + 4 + i * 682, num);
+									adpos2 += num;
+
+									if (adpos2 >= 20)
+									{
+										pTr->mylock.lock();
+										for (int k = 2; k < 10; k++)
+										{
+											int temp = (adbuf02[2 * k] & 0x7f) * 256 + adbuf02[2 * k + 1];
+
+											if ((adbuf02[2 * k] & 0x80) == 0x80)
+											{
+												temp = 0x8000 - temp;
+											}
+											value = temp;
+											value = 10 * (value / 32767);
+											if ((buf[2 * k] & 0x80) == 0x80)
+											{
+												pTr->dataRe_AD01[k - 2 + 8] = -value;
+											}
+											else
+											{
+												pTr->dataRe_AD01[k - 2 + 8] = value;
+											}
+										}
+										pTr->mylock.unlock();
+
+										memmove(adbuf02, adbuf02 + 20, adpos2 - 20);
+										adpos2 -= 20;
+									}
 
 								}
-							}
-							else if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x07)
-							{
-								int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
-								memcpy(adbuf02, bufsav + 4 + i * 682, num);
-								adpos2 += num;
-
-								if (adpos2 >= 20)
+								else
 								{
-									pTr->mylock.lock();
-									for (int k = 2; k < 10; k++)
-									{
-										int temp = (adbuf02[2 * k] & 0x7f) * 256 + adbuf02[2 * k + 1];
 
-										if ((adbuf02[2 * k] & 0x80) == 0x80)
-										{
-											temp = 0x8000 - temp;
-										}
-										value = temp;
-										value = 10 * (value / 32767);
-										if ((buf[2 * k] & 0x80) == 0x80)
-										{
-											pTr->dataRe_AD01[k - 2 + 8] = -value;
-										}
-										else
-										{
-											pTr->dataRe_AD01[k - 2 + 8] = value;
-										}
-									}
-									pTr->mylock.unlock();
-
-									memmove(adbuf02, adbuf02 + 20, adpos2 - 20);
-									adpos2 -= 20;
 								}
 
 							}
-							else
-							{
 
-							}
-
+							free(bufsav);
+							bufsav = nullptr;
 						}
 
-						free(bufsav);
-						bufsav = nullptr;
+						memmove(dealbuf, dealbuf + 4096, pos - 4096);
+						pos -= 4096;
 					}
+				}
+				else if (length == 0)
+				{
+					Sleep(100);
 
-					memmove(dealbuf, dealbuf + 4096, pos - 4096);
-					pos -= 4096;
+				}
+				else
+				{//半包状态
+					Sleep(50);
 				}
 			}
-			else if (length == 0)
-			{//缓存区已读空
-			//	printf("收到0包 \n");
 
-			}
-			else
-			{//半包状态
+			free(buf);
+			buf = NULL;
 
-				Sleep(1);
-			}
 		}
-
-
-		//		::Sleep(1);
-		free(buf);
-		buf = NULL;
+		catch (...)
+		{
+			printf("Transfer Error");
+		}
 	}
-	printf("22222222 \n");
+
 	return 1;
 }
 
@@ -479,6 +471,7 @@ bool myUsbDLL::DeviceOpen()
 		}
 
 		SendCMD(0x84, 0x00);
+
 		SendCMD(0x85, 0x00);
 
 		return true;
