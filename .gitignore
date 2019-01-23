@@ -265,3 +265,7 @@ __pycache__/
 UsbApi/UsbApiDemo/CKDll.iobj
 UsbApi/UsbApiDemo/CKDll.ipdb
 *.iobj
+*.vcxproj
+*.ipdb
+*.iobj
+*.exp
