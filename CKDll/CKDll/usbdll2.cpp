@@ -80,7 +80,7 @@ bool myUsbDLL::DeviceOpen()
 		myStruct[m].Used = false;
 	}
 
-	PropertyConfigurator::doConfigure(LOG4CPLUS_TEXT("G:\\CKDLL_LOG\\log.properties"));
+	PropertyConfigurator::doConfigure(LOG4CPLUS_TEXT("D:\\CKDLL_LOG\\log.properties"));
 	LOG4CPLUS_DEBUG(logger, "log start here in DeviceOpen");
 
 	USBDevice = new CCyUSBDevice(NULL, CYUSBDRV_GUID, 1);
