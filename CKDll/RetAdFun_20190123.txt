@@ -1,0 +1,206 @@
+DWORD WINAPI RetADFun(LPVOID ptr)
+{
+	myUsbDLL* pTr = (myUsbDLL*)(ptr);
+
+	double b2 = 0;
+	double b12 = 0;
+	double b9 = 0;
+	double b0 = 0;
+	double b13 = 0;
+	double b6 = 0;
+	double b10 = 0;
+	double b1 = 0;
+	double b14 = 0;
+	double b15 = 0;
+	double b4 = 0;
+	double b5 = 0;
+	while (pTr->RecvTag)
+	{
+		if (pTr->mRecalFun) {
+
+			pTr->mylock.lock();
+
+#pragma region Ô¤·Å+7V
+			////if (pTr->dataRe_AD01[9] > 3)
+			////{
+			////	if (pTr->dataRe_AD01[9] < 4)
+			////	{
+			////		b9 = 2 * pTr->dataRe_AD01[9];
+			////	}
+			////}
+
+			////if (pTr->dataRe_AD01[0] > 2.506)
+			////{
+			////	if (pTr->dataRe_AD01[0] < 2.6)
+			////	{
+			////		b0 = (pTr->dataRe_AD01[0] - 2.506) / 0.555;
+			////	}
+			////}
+
+			////pTr->mRecalFun("Ô¤·Å+7V", b9, b0);
+
+#pragma endregion
+
+#pragma region Ô¤·Å-5V
+
+			////if (pTr->dataRe_AD01[10] > 1.8)
+			////{
+			////	if (pTr->dataRe_AD01[10] < 2.2)
+			////	{
+			////		b10 = ((4.33*pTr->dataRe_AD01[10]) - 13.33);
+			////	}
+			////}
+
+			////if (pTr->dataRe_AD01[1] > 2.552)
+			////{
+			////	if (pTr->dataRe_AD01[1] < 2.65) {
+			////		b1 = (pTr->dataRe_AD01[1] - 2.552) / 0.555;
+			////	}
+			////}
+			////pTr->mRecalFun("Ô¤·Å-5V", b10, b1);
+
+
+
+#pragma endregion
+
+#pragma region ²¨¿Ø+4V
+			////if (pTr->dataRe_AD01[12] > 1.5)
+			////{
+			////	if (pTr->dataRe_AD01[12] < 2.25)
+			////	{
+			////		b12 = 2 * pTr->dataRe_AD01[12];
+			////	}
+			////}
+
+			////if (pTr->dataRe_AD01[2] > 2.451)
+			////{
+			////	if (pTr->dataRe_AD01[2] < 2.73)
+			////	{
+			////		b2 = (pTr->dataRe_AD01[2] - 2.451) / 0.555;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø+4V", b12, b2);
+
+
+#pragma endregion
+
+#pragma region ²¨¿Ø+12V
+
+			////if (pTr->dataRe_AD01[14] > 2.75)
+			////{
+			////	if (pTr->dataRe_AD01[14] < 3.25)
+			////	{
+			////		b14 = 4 * pTr->dataRe_AD01[14];
+			////	}
+			////}
+
+			////if (pTr->dataRe_AD01[4] > 3.8)
+			////{
+			////	if (pTr->dataRe_AD01[4] < 4.2) {
+			////		b4 = pTr->dataRe_AD01[4] / 2;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø+12V", b14, b4);
+
+
+
+#pragma endregion
+
+#pragma region ²¨¿Ø+5V
+
+			////if (pTr->dataRe_AD01[15] > 2.25)
+			////{
+			////	if (pTr->dataRe_AD01[15] < 2.75)
+			////	{
+			////		b15 = 2 * pTr->dataRe_AD01[15];
+			////	}
+			////}
+
+			////if (pTr->dataRe_AD01[5] > 0)
+			////{
+			////	if (pTr->dataRe_AD01[5] < 0.4) {
+			////		b5 = pTr->dataRe_AD01[5] / 2;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø+5V", b15, b5);
+
+
+
+#pragma endregion
+
+#pragma region ²¨¿Ø-5V
+			////if (pTr->dataRe_AD01[13] > 1.8)
+			////{
+			////	if (pTr->dataRe_AD01[13] < 2.2)
+			////	{
+			////		b13 = ((4.33*pTr->dataRe_AD01[13]) - 13.33);
+			////	}
+			////}
+
+			////if (pTr->dataRe_AD01[6] > 2.526)
+			////{
+			////	if (pTr->dataRe_AD01[6] < 2.65)
+			////	{
+			////		b6 = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
+			////	}
+			////}
+			////pTr->mRecalFun("²¨¿Ø-5V", b13, b6);
+
+#pragma endregion
+
+			pTr->mRecalFun("Ô¤·Å+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+			pTr->mRecalFun("Ô¤·Å-5V", (4.33*pTr->dataRe_AD01[10]) - 13.33, (pTr->dataRe_AD01[1] - 2.552) / 0.555);
+
+			pTr->mRecalFun("²¨¿Ø+4V", 2 * pTr->dataRe_AD01[12], (pTr->dataRe_AD01[2] - 2.451) / 0.555);
+
+			pTr->mRecalFun("²¨¿Ø+12V", (4 * pTr->dataRe_AD01[4]), pTr->dataRe_AD01[14] / 2);
+			pTr->mRecalFun("²¨¿Ø+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
+			pTr->mRecalFun("²¨¿Ø-5V", (4.33*pTr->dataRe_AD01[13]) - 13.33, (pTr->dataRe_AD01[6] - 2.526) / 0.555);
+
+		//	printf("tspan1---%02X,%02X,%02X,%02X  ", pTr->tspan1[0], pTr->tspan1[1], pTr->tspan1[2], pTr->tspan1[3]);
+		//	printf("tspan2---%02X,%02X,%02X,%02X  ", pTr->tspan2[0], pTr->tspan2[1], pTr->tspan2[2], pTr->tspan2[3]);
+
+			LOG4CPLUS_DEBUG(pTr->logger, "Ô¤·Å+7V " << "µçÑ¹£º" << 2 * pTr->dataRe_AD01[9] << "  µçÁ÷£º" << (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+
+			LOG4CPLUS_DEBUG(pTr->logger, "Ô¤·Å-5V " << "µçÑ¹£º" << (4.33*pTr->dataRe_AD01[10]) - 13.33 << "  µçÁ÷£º" << (pTr->dataRe_AD01[1] - 2.552) / 0.555);
+
+			LOG4CPLUS_DEBUG(pTr->logger, "²¨¿Ø+4V " << "µçÑ¹£º" << 2 * pTr->dataRe_AD01[12] << "  µçÁ÷£º" << (pTr->dataRe_AD01[2] - 2.451) / 0.555);
+
+			LOG4CPLUS_DEBUG(pTr->logger, "²¨¿Ø+12V" << "µçÑ¹£º" << (4 * pTr->dataRe_AD01[4]) << "  µçÁ÷£º" << pTr->dataRe_AD01[14] / 2);
+			LOG4CPLUS_DEBUG(pTr->logger, "²¨¿Ø+5V " << "µçÑ¹£º" << (2 * pTr->dataRe_AD01[15]) << "  µçÁ÷£º" << pTr->dataRe_AD01[5] / 2);
+			LOG4CPLUS_DEBUG(pTr->logger, "²¨¿Ø-5V " << "µçÑ¹£º" << (4.33*pTr->dataRe_AD01[13]) - 13.33 << "  µçÁ÷£º" << (pTr->dataRe_AD01[6] - 2.526) / 0.555);
+
+			//double a = 0;
+			//a = (2 * pTr->dataRe_AD01[9]);
+			//a = (pTr->dataRe_AD01[0] - 2.506) / 0.555;
+			//a = (4.33*pTr->dataRe_AD01[10]) - 13.33;
+			//a = (pTr->dataRe_AD01[1] - 2.552) / 0.555;
+			//a = 2 * pTr->dataRe_AD01[12];
+			//a = (pTr->dataRe_AD01[2] - 2.451) / 0.555;
+			//a = (4 * pTr->dataRe_AD01[4]);
+			//a = pTr->dataRe_AD01[14] / 2;
+			//a = (2 * pTr->dataRe_AD01[15]);
+			//a = pTr->dataRe_AD01[5] / 2;
+			//a = (4.33*pTr->dataRe_AD01[13]) - 13.33;
+			//a = (pTr->dataRe_AD01[6] - 2.526) / 0.555;
+
+
+			//bool ErrorDetected;
+			//if (ErrorDetected) {
+			//	int ErrorCode1;
+			//	int ErrorCode2;
+			//	pTr->mRecalFun("Ð£ÑéÂëERROR", ErrorCode1, ErrorCode2);
+			//}
+
+			//pTr->mRecalFun("END", 0, 0);
+
+			pTr->mylock.unlock();
+
+		}
+		Sleep(pTr->freqtime);
+	}
+
+	return 1;
+
+
+}

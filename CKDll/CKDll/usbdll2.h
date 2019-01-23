@@ -80,6 +80,9 @@ public:
 	virtual bool __stdcall Fun_DY1();
 	virtual bool __stdcall Fun_DY2();
 
+	virtual bool __stdcall Fun_YXQ_SET();
+
+
 public:
 	CCyUSBDevice *USBDevice;
 	CCyBulkEndPoint *BulkInEpt;				//Éè±¸-->PC
@@ -92,6 +95,15 @@ public:
 	char Register83H = 0x00;
 	char Register84H = 0x00;
 
+	int HiV_4 = 0;
+	int LoV_4 = 0;
+	int HiC_4 = 0;
+	int LoC_4 = 0;
+	int HiV_7 = 0;
+	int LoV_7 = 0;
+	int HiC_7 = 0;
+	int LoC_7 = 0;
+
 	mutex mylock;
 
 	mutex cmdlock;	
@@ -102,6 +114,10 @@ public:
 	int tc = 0xff;
 	int freqtime = 1000;
 	int tmode = 0x01;
+	unsigned char tspan1[4] = { 0,0,0,0 };
+	unsigned char tspan2[4] = { 0,0,0,0 };
+
+	Logger logger = Logger::getRoot();
 };
 
 

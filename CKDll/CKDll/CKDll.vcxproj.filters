@@ -52,5 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="library\cpp\lib\x64\CyAPI.lib" />
+    <Library Include="log4cplusU.lib" />
   </ItemGroup>
 </Project>
