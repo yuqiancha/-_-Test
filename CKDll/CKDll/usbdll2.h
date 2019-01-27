@@ -17,7 +17,6 @@ public:
 
 	virtual void Release();
 
-
 	virtual void WriteData_CS(unsigned char* buf, long &length);		//参数注入
 
 	virtual void WriteData_YXQ1(unsigned char* buf, long &length);		//移相器数据1注入
@@ -26,9 +25,7 @@ public:
 	virtual void WriteData_DY1(unsigned char* buf, long &length);		//电源数据1注入
 	virtual void WriteData_DY2(unsigned char* buf, long &length);		//电源数据2注入
 
-
 	virtual void ADFunc_Enable();//AD采集使能
-
 
 	virtual void Fun1();
 	virtual void Fun2();
@@ -37,7 +34,6 @@ public:
 	virtual void Fun5();
 	virtual void Fun6();
 	virtual void Fun7();
-
 
 	//
 	// 打开设备
@@ -67,7 +63,7 @@ public:
 	virtual bool __stdcall SetVotateLimit(int tag, double LoVotage, double HiVotage, double LoCurrent, double HiCurrent);
 	virtual bool __stdcall Start();
 	virtual bool __stdcall Stop();
-
+	virtual bool __stdcall Continue();
 	virtual bool __stdcall PowerOn_Target();
 	virtual bool __stdcall PowerOff_Target();
 
@@ -95,14 +91,16 @@ public:
 	char Register83H = 0x00;
 	char Register84H = 0x00;
 
-	int HiV_4 = 0;
-	int LoV_4 = 0;
-	int HiC_4 = 0;
-	int LoC_4 = 0;
-	int HiV_7 = 0;
-	int LoV_7 = 0;
-	int HiC_7 = 0;
-	int LoC_7 = 0;
+	double HiV_4 = 6;
+	double LoV_4 = 2;
+	double HiC_4 = 5;
+	double LoC_4 = 0;
+	double HiV_7 = 8;
+	double LoV_7 = 6;
+	double HiC_7 = 2;
+	double LoC_7 = 0;
+
+	bool shutpower = false;
 
 	mutex mylock;
 
@@ -114,10 +112,16 @@ public:
 	int tc = 0xff;
 	int freqtime = 1000;
 	int tmode = 0x01;
+
 	unsigned char tspan1[4] = { 0,0,0,0 };
 	unsigned char tspan2[4] = { 0,0,0,0 };
 
-	Logger logger = Logger::getRoot();
+	string tempfilename;
+
+	/*Logger logger = Logger::getRoot();*/
+//	Logger logger = Logger::getInstance(L"test");
+
+	int TagAB = 0x0;
 };
 
 

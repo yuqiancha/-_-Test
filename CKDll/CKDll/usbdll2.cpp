@@ -13,25 +13,31 @@ MyStruct* myStruct;
 const int Size = 108;
 
 IAntennaInterface*  CreateAntennInstance() {
+
 	return new myUsbDLL;
 }
 
 void  DestoryAntennInstance(IAntennaInterface*& instance) {
 	if (instance) {
+
+		//		Logger::shutdown();
+
 		delete instance;
 		instance = nullptr;
 	}
+
 }
 
 myUsbDLL::myUsbDLL()
 {
-	printf("测控模块设备驱动加载成功！\r\n");
+	//printf("测控模块设备驱动加载成功！\r\n");
 }
 
 
 myUsbDLL::~myUsbDLL()
 {
-	printf("测控模块设备驱动Release OK \r\n");
+	//	Logger::getRoot().shutdown();
+		//printf("测控模块设备驱动Release OK \r\n");
 }
 
 
@@ -71,54 +77,62 @@ void myUsbDLL::Fun7()
 
 bool myUsbDLL::DeviceOpen()
 {
-	myStruct = (struct MyStruct*)malloc(sizeof(struct MyStruct)*Size);
-	for (int m = 0; m < Size; m++)
-	{
-		myStruct[m].Chan = m;
-		myStruct[m].Amp = 0;
-		myStruct[m].Php = 0;
-		myStruct[m].Used = false;
-	}
-
-	PropertyConfigurator::doConfigure(LOG4CPLUS_TEXT("D:\\CKDLL_LOG\\log.properties"));
-	LOG4CPLUS_DEBUG(logger, "log start here in DeviceOpen");
-
-	USBDevice = new CCyUSBDevice(NULL, CYUSBDRV_GUID, 1);
-
-	if (USBDevice->IsOpen()) {
-		printf("设备打开成功");
-
-		int epnum = USBDevice->EndPointCount();
-		for (int j = 1; j < epnum; j++) {
-			bool bIn = ((USBDevice->EndPoints[j]->Address & 0x80) == 0x80);
-			bool bBulk = (USBDevice->EndPoints[j]->Attributes == 2);
-			if (bBulk&&bIn) {
-				BulkInEpt = (CCyBulkEndPoint *)USBDevice->EndPoints[j];
-				printf("BulkInEpt address is %x \n", BulkInEpt->Address);
-			}
-			if (bBulk && !bIn) {
-				BulkOutEpt = (CCyBulkEndPoint *)USBDevice->EndPoints[j];
-				printf("BulkOutEpt address is %x \n", BulkOutEpt->Address);
-			}
+	try {
+		myStruct = (struct MyStruct*)malloc(sizeof(struct MyStruct)*Size);
+		for (int m = 0; m < Size; m++)
+		{
+			myStruct[m].Chan = m;
+			myStruct[m].Amp = 0;
+			myStruct[m].Php = 0;
+			myStruct[m].Used = false;
 		}
 
-		SendCMD(0x84, 0x00);
-		SendCMD(0x85, 0x00);
+		//PropertyConfigurator::doConfigure(LOG4CPLUS_TEXT("D:\\CKDLL_LOG\\log.properties"));
+		//LOG4CPLUS_DEBUG(logger, "log start here in DeviceOpen");
 
+		USBDevice = new CCyUSBDevice(NULL, CYUSBDRV_GUID, 1);
+
+		//printf("before is open!");
+		if (USBDevice->IsOpen()) {
+			//printf("设备打开成功");
+
+			int epnum = USBDevice->EndPointCount();
+			for (int j = 1; j < epnum; j++) {
+				bool bIn = ((USBDevice->EndPoints[j]->Address & 0x80) == 0x80);
+				bool bBulk = (USBDevice->EndPoints[j]->Attributes == 2);
+				if (bBulk&&bIn) {
+					BulkInEpt = (CCyBulkEndPoint *)USBDevice->EndPoints[j];
+					//printf("BulkInEpt address is %x \n", BulkInEpt->Address);
+				}
+				if (bBulk && !bIn) {
+					BulkOutEpt = (CCyBulkEndPoint *)USBDevice->EndPoints[j];
+					//printf("BulkOutEpt address is %x \n", BulkOutEpt->Address);
+				}
+			}
+
+			//SendCMD(0x84, 0x01);
+			////LOG4CPLUS_DEBUG(logger, "上电..");
+
+			return true;
+		}
+		else
+		{
+			//printf("设备打开失败");
+			return false;
+		}
 		return true;
 	}
-	else
+	catch (...)
 	{
-		printf("设备打开失败");
 		return false;
 	}
 
-	return 1;
 }
 
 void myUsbDLL::ADFunc_Enable()
 {
 	SendCMD(0x83, 0x01);
+
 }
 
 
@@ -165,43 +179,87 @@ void myUsbDLL::SendCMD(int addr, int value)
 
 }
 
-volatile double dataRe_AD02[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-
 DWORD WINAPI RetADFun(LPVOID ptr)
 {
 	myUsbDLL* pTr = (myUsbDLL*)(ptr);
-	LOG4CPLUS_DEBUG(pTr->logger, "RetADFun..");
+	//LOG4CPLUS_DEBUG(pTr->logger, "RetADFun..");
 	while (pTr->RecvTag)
 	{
+		//if (pTr->shutpower)
+		//{
+		//	if (pTr->mRecalFun)
+		//	{
+		//		pTr->mRecalFun("CKLOG -- 电压电流超限，关闭设备，请重新开始测试", 0, 0);
+		//		pTr->Stop();
+		//		pTr->Close();
+		//	}
+		//	break;
+		//}
+
 		if (pTr->mRecalFun) {
-
 			pTr->mylock.lock();
+			double a = 2 * pTr->dataRe_AD01[9];
+			double b = (pTr->dataRe_AD01[0] - 2.494) / 0.555;
 
-			pTr->mRecalFun("预放+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
-			pTr->mRecalFun("预放-5V", (4.33*pTr->dataRe_AD01[10]) - 13.33, (pTr->dataRe_AD01[1] - 2.552) / 0.555);
+			pTr->mRecalFun("预放+7V", a, b);
+			if (a < pTr->LoV_7)
+			{
+				pTr->mRecalFun("预放+7V 电压小于设定值 设定值，实际值   Error", pTr->LoV_7, a);
+			}
+			if (a > pTr->HiV_7)
+			{
+				pTr->mRecalFun("预放+7V 电压大于设定值 设定值，实际值   Error", pTr->HiV_7, a);
+				pTr->mRecalFun("ABORT", 0, 0);
+			}
 
-			pTr->mRecalFun("波控+4V", 2 * pTr->dataRe_AD01[12], (pTr->dataRe_AD01[2] - 2.451) / 0.555);
+			if (b < pTr->LoC_7)
+			{
+				pTr->mRecalFun("预放+7V 电流小于设定值 设定值，实际值  Error", pTr->LoC_7, b);
+			}
+			if (b > pTr->HiC_7)
+			{
+				pTr->mRecalFun("预放+7V 电流大于设定值 设定值，实际值  Error", pTr->HiC_7, b);
+				pTr->mRecalFun("ABORT", 0, 0);
+			}
 
-			pTr->mRecalFun("波控+12V", (4 * pTr->dataRe_AD01[4]), pTr->dataRe_AD01[14] / 2);
+			pTr->mRecalFun("预放-5V", (4.33*pTr->dataRe_AD01[10]) - 13.33, (pTr->dataRe_AD01[1] - 2.555) / 0.555);
+
+			double c = 2 * pTr->dataRe_AD01[12];
+			double d = (pTr->dataRe_AD01[2] - 2.529) / 0.555;
+			d = 1.4*d;
+			pTr->mRecalFun("波控+4V", c, d);
+
+			if (c < pTr->LoV_4)
+			{
+				pTr->mRecalFun("波控+4V 电压小于设定值 设定值，实际值 Error", pTr->LoV_4, c);
+			}
+			if (c > pTr->HiV_4)
+			{
+				pTr->mRecalFun("波控+4V 电压大于设定值 设定值，实际值 Error", pTr->HiV_4, c);
+				pTr->mRecalFun("ABORT", 0, 0);
+			}
+			if (d < pTr->LoC_4)
+			{
+				pTr->mRecalFun("波控+4V 电流小于设定值 设定值，实际值 Error", pTr->LoC_4, d);
+			}
+			if (d > pTr->HiC_4)
+			{
+				pTr->mRecalFun("波控+4V 电流大于设定值 设定值，实际值 Error", pTr->HiC_4, d);
+				pTr->mRecalFun("ABORT", 0, 0);
+			}
+
+			pTr->mRecalFun("波控+12V", (3 * pTr->dataRe_AD01[4]), (pTr->dataRe_AD01[14] / 2) - 0.012);
 			pTr->mRecalFun("波控+5V", (2 * pTr->dataRe_AD01[15]), pTr->dataRe_AD01[5] / 2);
-			pTr->mRecalFun("波控-5V", (4.33*pTr->dataRe_AD01[13]) - 13.33, (pTr->dataRe_AD01[6] - 2.526) / 0.555);
+			pTr->mRecalFun("波控-5V", (4.33*pTr->dataRe_AD01[13]) - 13.33, (pTr->dataRe_AD01[6] - 2.534) / 0.555);
 
-			LOG4CPLUS_DEBUG(pTr->logger, "预放+7V " << "电压：" << 2 * pTr->dataRe_AD01[9] << "  电流：" << (pTr->dataRe_AD01[0] - 2.506) / 0.555);
-			LOG4CPLUS_DEBUG(pTr->logger, "预放-5V " << "电压：" << (4.33*pTr->dataRe_AD01[10]) - 13.33 << "  电流：" << (pTr->dataRe_AD01[1] - 2.552) / 0.555);
-			LOG4CPLUS_DEBUG(pTr->logger, "波控+4V " << "电压：" << 2 * pTr->dataRe_AD01[12] << "  电流：" << (pTr->dataRe_AD01[2] - 2.451) / 0.555);
-			LOG4CPLUS_DEBUG(pTr->logger, "波控+12V" << "电压：" << (4 * pTr->dataRe_AD01[4]) << "  电流：" << pTr->dataRe_AD01[14] / 2);
-			LOG4CPLUS_DEBUG(pTr->logger, "波控+5V " << "电压：" << (2 * pTr->dataRe_AD01[15]) << "  电流：" << pTr->dataRe_AD01[5] / 2);
-			LOG4CPLUS_DEBUG(pTr->logger, "波控-5V " << "电压：" << (4.33*pTr->dataRe_AD01[13]) - 13.33 << "  电流：" << (pTr->dataRe_AD01[6] - 2.526) / 0.555);
-
-
-			//bool ErrorDetected;
-			//if (ErrorDetected) {
-			//	int ErrorCode1;
-			//	int ErrorCode2;
-			//	pTr->mRecalFun("校验码ERROR", ErrorCode1, ErrorCode2);
-			//}
-
-			//pTr->mRecalFun("END", 0, 0);
+			/*	//LOG4CPLUS_DEBUG(pTr->logger, "预放+7V " << "电压：" << 2 * pTr->dataRe_AD01[9] << "  电流：" << (pTr->dataRe_AD01[0] - 2.506) / 0.555);
+				//LOG4CPLUS_DEBUG(pTr->logger, "预放-5V " << "电压：" << (4.33*pTr->dataRe_AD01[10]) - 13.33 << "  电流：" << (pTr->dataRe_AD01[1] - 2.552) / 0.555);
+				//LOG4CPLUS_DEBUG(pTr->logger, "波控+4V " << "电压：" << 2 * pTr->dataRe_AD01[12] << "  电流：" << (pTr->dataRe_AD01[2] - 2.451) / 0.555);
+				//LOG4CPLUS_DEBUG(pTr->logger, "波控+12V" << "电压：" << (3 * pTr->dataRe_AD01[4]) << "  电流：" << pTr->dataRe_AD01[14] / 2);
+				//LOG4CPLUS_DEBUG(pTr->logger, "波控+5V " << "电压：" << (2 * pTr->dataRe_AD01[15]) << "  电流：" << pTr->dataRe_AD01[5] / 2);
+				//LOG4CPLUS_DEBUG(pTr->logger, "波控-5V " << "电压：" << (4.33*pTr->dataRe_AD01[13]) - 13.33 << "  电流：" << (pTr->dataRe_AD01[6] - 2.526) / 0.555);
+			*/
+			pTr->mRecalFun("END", 0, 0);
 
 			pTr->mylock.unlock();
 
@@ -209,7 +267,7 @@ DWORD WINAPI RetADFun(LPVOID ptr)
 		Sleep(pTr->freqtime);
 	}
 
-	LOG4CPLUS_DEBUG(pTr->logger, "RetADFun Exit..");
+	//LOG4CPLUS_DEBUG(pTr->logger, "RetADFun Exit..");
 	return 1;
 
 
@@ -219,7 +277,7 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 {
 	myUsbDLL* pTr = (myUsbDLL*)(ptr);
 
-	LOG4CPLUS_DEBUG(pTr->logger, "GetDataFun..");
+	//LOG4CPLUS_DEBUG(pTr->logger, "GetDataFun..");
 
 	int count = 0;
 
@@ -233,6 +291,9 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 	pTr->Register80H = pTr->Register80H | 0x04;
 	pTr->SendCMD(0x80, pTr->Register80H);
 
+	pTr->SendCMD(0x83, 0x01);//AD打开
+	//LOG4CPLUS_DEBUG(pTr->logger, "AD打开..");
+
 	char path[128];
 	GetCurrentDirectoryA(128, path);
 	string temp = path;
@@ -242,37 +303,37 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 	command = "mkdir " + SYSTEMPATH;
 	system(command.c_str());
 
-	SYSTEMTIME st;
-	GetLocalTime(&st);
-	FILE *fileFF08_1D06;
-	FILE *fileFF08_1D07;
-	FILE *fileFF08;
+	//SYSTEMTIME st;
+	//GetLocalTime(&st);
+	//FILE *fileFF08_1D06;
+	//FILE *fileFF08_1D07;
+	//FILE *fileFF08;
 
-	string tt = "";
-	char array[10];
+	//string tt = "";
+	//char array[10];
 
-	_itoa_s(st.wYear, array, 10);
-	tt = tt + array + "年";
-	_itoa_s(st.wMonth, array, 10);
-	tt = tt + array + "月";
-	_itoa_s(st.wDay, array, 10);
-	tt = tt + array + "日";
+	//_itoa_s(st.wYear, array, 10);
+	//tt = tt + array + "年";
+	//_itoa_s(st.wMonth, array, 10);
+	//tt = tt + array + "月";
+	//_itoa_s(st.wDay, array, 10);
+	//tt = tt + array + "日";
 
 
-	_itoa_s(st.wHour, array, 10);
-	tt = tt + array + "时";
-	_itoa_s(st.wMinute, array, 10);
-	tt = tt + array + "分";
-	_itoa_s(st.wSecond, array, 10);
-	tt = tt + array + "秒";
+	//_itoa_s(st.wHour, array, 10);
+	//tt = tt + array + "时";
+	//_itoa_s(st.wMinute, array, 10);
+	//tt = tt + array + "分";
+	//_itoa_s(st.wSecond, array, 10);
+	//tt = tt + array + "秒";
 
-	string tempstrFF08_1D06 = SYSTEMPATH + tt + "1d06.dat";
-	string tempstrFF08_1D07 = SYSTEMPATH + tt + "1d07.dat";
-	string tempstrFF08 = SYSTEMPATH + tt + "FF08.dat";
+	//string tempstrFF08_1D06 = SYSTEMPATH + tt + "1d06.dat";
+	//string tempstrFF08_1D07 = SYSTEMPATH + tt + "1d07.dat";
+	//string tempstrFF08 = SYSTEMPATH + tt + "FF08.dat";
 
-	fopen_s(&fileFF08_1D06, tempstrFF08_1D06.c_str(), "wb+");
-	fopen_s(&fileFF08_1D07, tempstrFF08_1D07.c_str(), "wb+");
-	fopen_s(&fileFF08, tempstrFF08.c_str(), "wb+");
+	//fopen_s(&fileFF08_1D06, tempstrFF08_1D06.c_str(), "wb+");
+	//fopen_s(&fileFF08_1D07, tempstrFF08_1D07.c_str(), "wb+");
+	//fopen_s(&fileFF08, tempstrFF08.c_str(), "wb+");
 
 	queue<unsigned char> que06;
 	queue<unsigned char> que07;
@@ -293,21 +354,21 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 					pos += length;
 					if (pos >= 4096)
 					{
-						//		printf("Seq:%d %d ReturnLen = %d %x %x %x %x \n", count, pos / 4096, length, dealbuf[0], dealbuf[1], dealbuf[2], dealbuf[3]);
+						//		//printf("Seq:%d %d ReturnLen = %d %x %x %x %x \n", count, pos / 4096, length, dealbuf[0], dealbuf[1], dealbuf[2], dealbuf[3]);
 
 						if (dealbuf[0] == 0xff && dealbuf[1] == 0x08)
 						{
 							unsigned char *bufsav = (unsigned char *)malloc(4092 * sizeof(char));
 							memcpy(bufsav, dealbuf + 4, 4092);
 
-							try {
-								fwrite(bufsav, sizeof(char), 4092, fileFF08);
+							/*try {
+								fwrite(dealbuf, sizeof(char), 4096, fileFF08);
 								fflush(fileFF08);
 							}
 							catch (exception &e)
 							{
-								printf(e.what());
-							}
+								//printf(e.what());
+							}*/
 
 							for (int i = 0; i < 6; i++)
 							{
@@ -316,21 +377,29 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 								{
 									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
 									if (num == 2) {
-										//	pTr->mRecalFun("校验码ERROR", (bufsav[i * 682 + 4], bufsav[i * 682 + 5]);
+										//	pTr->mRecalFun("校验码ERROR", (int)bufsav[i * 682 + 4], (int)bufsav[i * 682 + 5]);
+									}
+								}
+								if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x01)
+								{
+									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
+									if (num == 1) {
+										pTr->TagAB = bufsav[i * 682 + 4];
+										//LOG4CPLUS_DEBUG(pTr->logger, "TagAB is :"<<pTr->TagAB);
 									}
 								}
 								else if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x06)
 								{
 									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
 
-									try {
+								/*	try {
 										fwrite(bufsav + i * 682 + 4, sizeof(char), num, fileFF08_1D06);
 										fflush(fileFF08_1D06);
 									}
 									catch (exception &e)
 									{
-										printf(e.what());
-									}
+										//printf(e.what());
+									}*/
 
 									pTr->mylock.lock();
 									for (int j = 0; j < num; j++)
@@ -374,7 +443,7 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 											/*					if (k == 4) {
 																	if ((pTr->dataRe_AD01[k - 2] < 2) || (pTr->dataRe_AD01[k - 2] > 3))
 																	{
-																		printf("Here is Error %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x\n", buf06[0], buf06[1], buf06[2], buf06[3], buf06[4], buf06[5], buf06[6], buf06[7], buf06[8], buf06[9], buf06[10],
+																		//printf("Here is Error %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x\n", buf06[0], buf06[1], buf06[2], buf06[3], buf06[4], buf06[5], buf06[6], buf06[7], buf06[8], buf06[9], buf06[10],
 																			buf06[11], buf06[12], buf06[13], buf06[14], buf06[15], buf06[16], buf06[17], buf06[18], buf06[19]);
 																	}
 																}*/
@@ -389,14 +458,14 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 								{
 									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
 
-									try {
+								/*	try {
 										fwrite(bufsav + i * 682 + 4, sizeof(char), num, fileFF08_1D07);
 										fflush(fileFF08_1D07);
 									}
 									catch (exception &e)
 									{
-										printf(e.what());
-									}
+										//printf(e.what());
+									}*/
 
 									pTr->mylock.lock();
 
@@ -436,14 +505,6 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 											{
 												pTr->dataRe_AD01[k - 2 + 8] = value;
 											}
-
-											/*									if (k == 4) {
-																					if ((pTr->dataRe_AD01[k - 2] < 2) || (pTr->dataRe_AD01[k - 2] > 3))
-																					{
-																						printf("Here is Error222 %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x %2x\n", buf07[0], buf07[1], buf07[2], buf07[3], buf07[4], buf07[5], buf07[6], buf07[7], buf07[8], buf07[9], buf07[10],
-																							buf07[11], buf07[12], buf07[13], buf07[14], buf07[15], buf07[16], buf07[17], buf07[18], buf07[19]);
-																					}
-																				}*/
 										}
 										free(buf07);
 										buf07 = NULL;
@@ -491,18 +552,18 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 		}
 		catch (...)
 		{
-			printf("Transfer Error");
+			//printf("Transfer Error");
 		}
 	}
 
-	LOG4CPLUS_DEBUG(pTr->logger, "GetDataFun Exit..");
+	//LOG4CPLUS_DEBUG(pTr->logger, "GetDataFun Exit..");
 
 	return 1;
 }
 
 void myUsbDLL::ReadEnable()
 {
-	LOG4CPLUS_DEBUG(logger, "ReadEnable..");
+	//LOG4CPLUS_DEBUG(logger, "ReadEnable..");
 	Sleep(100);
 	SendCMD(0x80, 0x01);
 	SendCMD(0x80, 0x00);
@@ -519,7 +580,6 @@ void myUsbDLL::ReadEnable()
 	CloseHandle(hThread1);
 
 	HANDLE hThread2;
-
 	hThread2 = CreateThread(NULL, NULL, RetADFun, this, 0, &dwThreadId);
 	CloseHandle(hThread2);
 }
@@ -544,7 +604,7 @@ void myUsbDLL::ReadData(unsigned char* buf, long &length)
 
 void myUsbDLL::WriteData_CS(unsigned char* buf, long &length)
 {
-	LOG4CPLUS_DEBUG(logger, "WriteData_CS..");
+	//LOG4CPLUS_DEBUG(logger, "WriteData_CS..");
 	Register81H = Register81H | 0x01;
 	SendCMD(0x81, Register81H);
 	Register81H = Register81H & 0x7e;
@@ -555,7 +615,7 @@ void myUsbDLL::WriteData_CS(unsigned char* buf, long &length)
 
 void myUsbDLL::WriteData_YXQ1(unsigned char* buf, long &length)
 {
-	LOG4CPLUS_DEBUG(logger, "WriteData_YXQ1..");
+	//LOG4CPLUS_DEBUG(logger, "WriteData_YXQ1..");
 	Register81H = Register81H | 0x02;
 	SendCMD(0x81, Register81H);
 	Register81H = Register81H & 0x7d;
@@ -566,7 +626,7 @@ void myUsbDLL::WriteData_YXQ1(unsigned char* buf, long &length)
 
 void myUsbDLL::WriteData_YXQ2(unsigned char* buf, long &length)
 {
-	LOG4CPLUS_DEBUG(logger, "WriteData_YXQ2..");
+	//LOG4CPLUS_DEBUG(logger, "WriteData_YXQ2..");
 	Register81H = Register81H | 0x04;
 	SendCMD(0x81, Register81H);
 	Register81H = Register81H & 0x7b;
@@ -634,17 +694,17 @@ void myUsbDLL::WriteData(unsigned char* buf, long &length)
 	LONG sendlen = SendSize;
 	if (BulkOutEpt) {
 		BulkOutEpt->XferData(sendbuf, sendlen);	//写到板卡
-		printf("写入成功; %d\n", sendlen);
+		//printf("写入成功; %d\n", sendlen);
 	}
 	else
 	{
-		printf("写入失败，设备为空");
+		//printf("写入失败，设备为空");
 	}
 }
 
 void myUsbDLL::WriteData_WithChan(int chan, unsigned char* buf, long &length)
 {
-	LOG4CPLUS_DEBUG(logger, "WriteData_WithChan..");
+	//LOG4CPLUS_DEBUG(logger, "WriteData_WithChan..");
 	Register80H = Register80H | 0x02;
 	SendCMD(0x80, Register80H);
 	Register80H = Register80H & 0xFD;
@@ -689,50 +749,59 @@ void myUsbDLL::WriteData_WithChan(int chan, unsigned char* buf, long &length)
 
 	if (BulkOutEpt) {
 		BulkOutEpt->XferData(sendbuf, sendlen);	//写到板卡
-		printf("写入成功; %d\n", sendlen);
+		//printf("写入成功; %d\n", sendlen);
 
 
 		char outbuf[4096];
 		int pos = 0;
 		for (int j = 0; j < sendlen; j++)
 		{
-			//	printf("%2x,", sendbuf[j]);
+			//	//printf("%2x,", sendbuf[j]);
 			pos += sprintf_s(outbuf + pos, 4096, "%02x,", sendbuf[j]);
 		}
 		outbuf[pos - 1] = '\n';
-		LOG4CPLUS_DEBUG(logger, outbuf);
+		//LOG4CPLUS_DEBUG(logger, outbuf);
 
 	}
 	else
 	{
-		printf("写入失败，设备为空");
+		//printf("写入失败，设备为空");
 	}
 }
 
 bool __stdcall myUsbDLL::Open(const char* Addr) {
-	LOG4CPLUS_DEBUG(logger, "Open");
-	DeviceOpen();
-	ReadEnable();
-	return true;
+	//LOG4CPLUS_DEBUG(logger, "Open");
+	bool tag = DeviceOpen();
+	if (tag == false)
+	{
+		return false;
+	}
+	else
+	{
+		ReadEnable();
+		return true;
+
+	}
+
 }
 
-void  __stdcall myUsbDLL::Close() {
-	LOG4CPLUS_DEBUG(logger, "Close");
-	PowerOff_Target();
-	RecvTag = false;
-}
+
 
 bool  __stdcall myUsbDLL::IsOpen() {
-	LOG4CPLUS_DEBUG(logger, "IsOpen");
-	return USBDevice->IsOpen();
+	//LOG4CPLUS_DEBUG(logger, "IsOpen");
+	try {
+		bool tag = USBDevice->IsOpen();
+		return tag;
+	}
+	catch (...)
+	{
+		return false;
+	}
 }
 
 bool  __stdcall myUsbDLL::SetAntennaMode(myUsbDLL::AntennaStatus mode)
 {
-	LOG4CPLUS_DEBUG(logger, "SetAntennaMode.. mode is " << mode);
-	SendCMD(0x85, 0x01);//停止
-	SendCMD(0x85, 0x00);//
-	Sleep(200);
+	//LOG4CPLUS_DEBUG(logger, "SetAntennaMode.. mode is " << mode);
 
 	//写入测试数据
 	switch (mode)
@@ -756,64 +825,114 @@ bool  __stdcall myUsbDLL::SetAntennaMode(myUsbDLL::AntennaStatus mode)
 }
 
 bool  __stdcall myUsbDLL::SetAntennaSendAndReceiveSwitchTime(double mTime) {
-	LOG4CPLUS_DEBUG(logger, "SetAntennaSendAndReceiveSwitchTime.. mTime is " << mTime);
+	//LOG4CPLUS_DEBUG(logger, "SetAntennaSendAndReceiveSwitchTime.. mTime is " << mTime);
 	tc = mTime * 50000;
 	return true;
 }
 
 bool __stdcall  myUsbDLL::SetVotateLimit(int tag, double LoVotage, double HiVotage, double LoCurrent, double HiCurrent)
 {
-	LOG4CPLUS_DEBUG(logger, "SetVotateLimit.. " << tag << "低压" << LoVotage << "高压" << HiVotage << "低电流" << LoCurrent << "高电流" << HiCurrent);
-	//	pTr->mRecalFun("预放+7V", (2 * pTr->dataRe_AD01[9]), (pTr->dataRe_AD01[0] - 2.506) / 0.555);
-	//	pTr->mRecalFun("波控+4V", 2 * pTr->dataRe_AD01[12], (pTr->dataRe_AD01[2] - 2.451) / 0.555);
+	//LOG4CPLUS_DEBUG(logger, "SetVotateLimit.. " << tag << "低压" << LoVotage << "高压" << HiVotage << "低电流" << LoCurrent << "高电流" << HiCurrent);
 
-	//value = temp;
-	//value = 10 * (value / 32767);
-
-	//if ((buf06[2 * k] & 0x80) == 0x80)
-	//{
-	//	pTr->dataRe_AD01[k - 2] = -value;
-	//}
-	//else
-	//{
-	//	pTr->dataRe_AD01[k - 2] = value;
-	//}
 
 	if (tag == 0)//+4V
 	{
-		HiV_4 = (HiVotage / 2)*3276.7;
-		LoV_4 = (LoVotage / 2)*3276.7;
-		HiC_4 = (HiCurrent * 0.555 + 2.451)*3276.7;
-		LoC_4 = (LoCurrent * 0.555 + 2.451)*3276.7;
+		LoV_4 = LoVotage;
+		HiV_4 = HiVotage;
+		LoC_4 = LoCurrent;
+		HiC_4 = HiCurrent;
 	}
-	else if (tag == 1)//+7V
-	{
-		HiV_7 = (HiVotage / 2)*3276.7;
-		LoV_7 = (LoVotage / 2)*3276.7;
-		HiC_7 = (HiCurrent * 0.555 + 2.506)*3276.7;
-		LoC_7 = (LoCurrent * 0.555 + 2.506)*3276.7;
-	}
-	else
-	{
 
+	if (tag == 1)//+7V
+	{
+		LoV_7 = LoVotage;
+		HiV_7 = HiVotage;
+		LoC_7 = LoCurrent;
+		HiC_7 = HiCurrent;
 	}
+
+	return true;
+}
+
+bool __stdcall myUsbDLL::Continue()
+{
+	//mRecalFun("CKLOG --Continue()", 0, 0);
+	Fun_DY1();
+	Sleep(100);
+
+	Fun_DY2();
+	Sleep(100);
+
+	Fun_YXQ_SET();
+
+	LONG bytesToWrite = 31;
+	unsigned char * buf = (unsigned char *)malloc(bytesToWrite * sizeof(unsigned char));
+	memset(buf, 0x00, bytesToWrite);
+
+	buf[0] = tmode;//测试模式
+
+	buf[1] = 0xff;
+	buf[2] = 0xff;
+	buf[3] = 0xff;
+	buf[4] = 0xff;//收发切换模式中的成功测试次数
+	buf[5] = (tc & 0xff000000) >> 24;
+	buf[6] = (tc & 0xff0000) >> 16;
+	buf[7] = (tc & 0xff00) >> 8;
+	buf[8] = tc & 0xff;//收发切换模式中的可调延时
+
+	buf[9] = 0x00;
+	buf[10] = 0x00;
+	buf[11] = 0x00;
+	buf[12] = 0x26;
+	buf[13] = 0x25;
+	buf[14] = 0xa0;//高温老练时间
+
+	int h4v = (HiV_4 / 2)*3276.7;
+	int l4v = (LoV_4 / 2)*3276.7;
+	int h4c = (HiC_4 * 0.555 + 2.529)*3276.7;
+	int l4c = (LoC_4 * 0.555 + 2.529)*3276.7;
+
+	int h7v = (HiV_7 / 2)*3276.7;
+	int l7v = (LoV_7 / 2)*3276.7;
+	int h7c = (HiC_7 * 0.555 + 2.494)*3276.7;
+	int l7c = (LoC_7 * 0.555 + 2.494)*3276.7;
+
+	buf[15] = (h7v & 0xff00) >> 8;
+	buf[16] = h7v & 0xff;
+	buf[17] = (l7v & 0xff00) >> 8;
+	buf[18] = l7v & 0xff;//+7V电压
+	buf[19] = (h4v & 0xff00) >> 8;
+	buf[20] = h4v & 0xff;
+	buf[21] = (l4v & 0xff00) >> 8;
+	buf[22] = l4v & 0xff;//+4V电压
+	buf[23] = (h7c & 0xff00) >> 8;
+	buf[24] = h7c & 0xff;
+	buf[25] = (l7c & 0xff00) >> 8;
+	buf[26] = l7c & 0xff;//+7V电流
+	buf[27] = (h4c & 0xff00) >> 8;
+	buf[28] = h4c & 0xff;
+	buf[29] = (l4c & 0xff00) >> 8;
+	buf[30] = l4c & 0xff;//+4V电流
+
+	WriteData_CS(buf, bytesToWrite);
 
 	return true;
 }
 
 bool __stdcall  myUsbDLL::Start()
 {
-	LOG4CPLUS_DEBUG(logger, "Start..");
+	//LOG4CPLUS_DEBUG(logger, "Start..");
 
-	SendCMD(0x83, 0x01);//AD打开
-	Sleep(100);
-	SendCMD(0x84, 0x01);//上电
-	Sleep(100);
+	shutpower = false;
+
+	SendCMD(0x84, 0x01);
+	//LOG4CPLUS_DEBUG(logger, "上电..");
+
 	Fun_DY1();
-	Sleep(300);
+	Sleep(100);
 
 	Fun_DY2();
-	Sleep(300);
+	Sleep(100);
 
 	Fun_YXQ_SET();
 
@@ -838,32 +957,48 @@ bool __stdcall  myUsbDLL::Start()
 	buf[7] = (tc & 0xff00) >> 8;
 	buf[8] = tc & 0xff;//收发切换模式中的可调延时
 
-	buf[9] = 0xff;
-	buf[10] = 0xff;
-	buf[11] = 0xff;
-	buf[12] = 0xff;
-	buf[13] = 0xff;
-	buf[14] = 0xff;//高温老练时间
+	buf[9] = 0x00;
+	buf[10] = 0x00;
+	buf[11] = 0x00;
+	buf[12] = 0x26;
+	buf[13] = 0x25;
+	buf[14] = 0xa0;//高温老练时间
 
-	buf[15] = (HiV_7 & 0xff00) >> 8;
-	buf[16] = HiV_7 & 0xff;
-	buf[17] = (LoV_7 & 0xff00) >> 8;
-	buf[18] = LoV_7 & 0xff;//+7V电压
+	int h4v = (HiV_4 / 2)*3276.7;
+	int l4v = (LoV_4 / 2)*3276.7;
+	int h4c = (HiC_4 * 0.555 + 2.529)*3276.7;
+	int l4c = (LoC_4 * 0.555 + 2.529)*3276.7;
 
-	buf[19] = (HiC_7 & 0xff00) >> 8;
-	buf[20] = HiC_7 & 0xff;
-	buf[21] = (LoC_7 & 0xff00) >> 8;
-	buf[22] = LoC_7 & 0xff;//+7V电流
+	int h7v = (HiV_7 / 2)*3276.7;
+	int l7v = (LoV_7 / 2)*3276.7;
+	int h7c = (HiC_7 * 0.555 + 2.494)*3276.7;
+	int l7c = (LoC_7 * 0.555 + 2.494)*3276.7;
 
-	buf[23] = (HiV_4 & 0xff00) >> 8;
-	buf[24] = HiV_4 & 0xff;
-	buf[25] = (LoV_4 & 0xff00) >> 8;
-	buf[26] = LoV_4 & 0xff;//+4V电压
+	buf[15] = (h7v & 0xff00) >> 8;
+	buf[16] = h7v & 0xff;
+	buf[17] = (l7v & 0xff00) >> 8;
+	buf[18] = l7v & 0xff;//+7V电压
 
-	buf[27] = (HiC_4 & 0xff00) >> 8;
-	buf[28] = HiC_4 & 0xff;
-	buf[29] = (LoC_4 & 0xff00) >> 8;
-	buf[30] = LoC_4 & 0xff;//+4V电流
+	//buf[19] = (h7c & 0xff00) >> 8;
+	//buf[20] = h7c & 0xff;
+	//buf[21] = (l7c & 0xff00) >> 8;
+	//buf[22] = l7c & 0xff;//+7V电流
+	buf[19] = (h4v & 0xff00) >> 8;
+	buf[20] = h4v & 0xff;
+	buf[21] = (l4v & 0xff00) >> 8;
+	buf[22] = l4v & 0xff;//+4V电压
+
+	buf[23] = (h7c & 0xff00) >> 8;
+	buf[24] = h7c & 0xff;
+	buf[25] = (l7c & 0xff00) >> 8;
+	buf[26] = l7c & 0xff;//+7V电流
+
+
+
+	buf[27] = (h4c & 0xff00) >> 8;
+	buf[28] = h4c & 0xff;
+	buf[29] = (l4c & 0xff00) >> 8;
+	buf[30] = l4c & 0xff;//+4V电流
 
 
 
@@ -893,8 +1028,20 @@ bool __stdcall  myUsbDLL::Start()
 
 bool __stdcall  myUsbDLL::Stop()
 {
+	PowerOff_Target();
+	//LOG4CPLUS_DEBUG(logger, "下电..");
+
 	SendCMD(0x85, 0x01);
+	Sleep(100);
+	SendCMD(0x85, 0x00);
+	//LOG4CPLUS_DEBUG(logger, "手动停止..");
 	return true;
+}
+
+void  __stdcall myUsbDLL::Close() {
+	//LOG4CPLUS_DEBUG(logger, "Close");
+	PowerOff_Target();
+	RecvTag = false;
 }
 
 bool __stdcall  myUsbDLL::Fun_YXQ1_Not()
@@ -913,6 +1060,13 @@ bool __stdcall  myUsbDLL::Fun_YXQ1_Not()
 	}
 
 	WriteData_YXQ1(buf, bytesToWrite);
+
+	for (int j = 0; j < 108; j++)
+	{
+		myStruct[j].Amp = 0;
+		myStruct[j].Php = 0;
+		myStruct[j].Used = true;
+	}
 	return true;
 }
 
@@ -932,6 +1086,13 @@ bool __stdcall  myUsbDLL::Fun_YXQ1_Yes()
 	}
 
 	WriteData_YXQ1(buf, bytesToWrite);
+
+	for (int j = 0; j < 108; j++)
+	{
+		myStruct[j].Amp = 15.5;
+		myStruct[j].Php = 354.375;
+		myStruct[j].Used = true;
+	}
 	return true;
 }
 
@@ -951,6 +1112,14 @@ bool __stdcall  myUsbDLL::Fun_YXQ2_Not()
 	}
 
 	WriteData_YXQ2(buf, bytesToWrite);
+
+	for (int j = 0; j < 108; j++)
+	{
+		myStruct[j].Amp = 0;
+		myStruct[j].Php = 0;
+		myStruct[j].Used = true;
+	}
+
 	return true;
 }
 
@@ -970,12 +1139,19 @@ bool __stdcall  myUsbDLL::Fun_YXQ2_Yes()
 	}
 
 	WriteData_YXQ2(buf, bytesToWrite);
+
+	for (int j = 0; j < 108; j++)
+	{
+		myStruct[j].Amp = 15.5;
+		myStruct[j].Php = 354.375;
+		myStruct[j].Used = true;
+	}
 	return true;
 }
 
 bool __stdcall  myUsbDLL::Fun_DY1()
 {
-	LOG4CPLUS_DEBUG(logger, "Fun_DY1..");
+	//LOG4CPLUS_DEBUG(logger, "Fun_DY1..");
 	LONG bytesToWrite = 5;
 	unsigned char * buf = (unsigned char *)malloc(bytesToWrite * sizeof(unsigned char));
 	//00c0ffffc0,1代表关闭，0代表打开，默认全部关闭
@@ -1014,7 +1190,7 @@ bool __stdcall  myUsbDLL::Fun_DY1()
 
 bool __stdcall  myUsbDLL::Fun_DY2()
 {
-	LOG4CPLUS_DEBUG(logger, "Fun_DY2..");
+	//LOG4CPLUS_DEBUG(logger, "Fun_DY2..");
 	LONG bytesToWrite = 5;
 	unsigned char * buf2 = (unsigned char *)malloc(bytesToWrite * sizeof(unsigned char));
 	//ff3f00f030,密切注意，这里的b15 b14是用到接收码字里面了！！！！
@@ -1060,7 +1236,7 @@ bool __stdcall  myUsbDLL::Fun_DY2()
 
 bool __stdcall myUsbDLL::Fun_YXQ_SET()
 {
-	LOG4CPLUS_DEBUG(logger, "Fun_YXQ_SET..");
+	//LOG4CPLUS_DEBUG(logger, "Fun_YXQ_SET..");
 
 	int temp1 = 0;
 	int temp2 = 0;
@@ -1167,38 +1343,84 @@ bool __stdcall myUsbDLL::Fun_YXQ_SET()
 
 
 bool  __stdcall myUsbDLL::SetAmpAndPhpTable(const char* fileName) {
-	LOG4CPLUS_DEBUG(logger, "SetAmpAndPhpTable:" << fileName);
+
+	for (int m = 0; m < Size; m++)
+	{
+		myStruct[m].Used = false;
+	}
+
+	tempfilename = fileName;
+	//LOG4CPLUS_DEBUG(logger, "SetAmpAndPhpTable:" << tempfilename.c_str());
 
 	FILE *fp;
 	errno_t err;
 	err = fopen_s(&fp, fileName, "r");
 	if (fp == NULL) {
-		LOG4CPLUS_DEBUG(logger, "Open File failed.");
-		exit(0);
+		//LOG4CPLUS_DEBUG(logger, "Open File failed.");
+		return false;
 	}
 	else
 	{
-		LOG4CPLUS_DEBUG(logger, "Open File Successed.");
+		//LOG4CPLUS_DEBUG(logger, "Open File Successed.");
+
+		int chan;
+		float Amp;
+		float Php;
+		while (!feof(fp)) {
+			fscanf_s(fp, "%d,%f,%f", &chan, &Amp, &Php);
+			//printf("%d,%.1f,%.1f\n", chan, Amp, Php);
+			myStruct[chan - 1].Amp = Amp;
+			myStruct[chan - 1].Php = Php;
+			myStruct[chan - 1].Used = true;
+		}
+		fclose(fp);
+
+		return true;
 	}
 
-	int chan;
-	float Amp;
-	float Php;
-	while (!feof(fp)) {
-		fscanf_s(fp, "%d,%f,%f", &chan, &Amp, &Php);
-		printf("%d,%.1f,%.1f\n", chan, Amp, Php);
-		myStruct[chan - 1].Amp = Amp;
-		myStruct[chan - 1].Php = Php;
-		myStruct[chan - 1].Used = true;
-	}
-	fclose(fp);
-
-	return true;
 }
 
 
 
-bool  __stdcall myUsbDLL::SetSingleAmpAndPhp(unsigned ch, double amp, double php) {
+bool  __stdcall myUsbDLL::SetSingleAmpAndPhp(unsigned ch, double amp, double php)
+{
+	SetAmpAndPhpTable(tempfilename.c_str());
+
+	TagAB = 0x00;
+	//LOG4CPLUS_DEBUG(logger, "SetSingleAmpAndPhp ch="<<ch<<" amp="<<amp<<" php="<<php);
+
+	if (ch < 108 && ch>0) {
+		myStruct[ch - 1].Amp = amp;
+		myStruct[ch - 1].Php = php;
+		myStruct[ch - 1].Used = true;;
+
+		Continue();
+
+		int timeout = 0;
+		while (TagAB != 0xAB)
+		{
+			//LOG4CPLUS_DEBUG(logger, "SetSingleAmpAndPhp TagAB!= 0xAB ");
+			Sleep(100);
+			timeout += 1;
+			if (timeout >= 100)
+			{
+				if (mRecalFun) {
+					mRecalFun("CKLOG --SetSingleAmpAndPhp() failed", 0, 0);
+				}
+				return false;
+			}
+		}
+		//LOG4CPLUS_DEBUG(logger, "SetSingleAmpAndPhp Successed!");
+		//if (mRecalFun) {
+		//	mRecalFun("CKLOG --SetSingleAmpAndPhp() successed", 0, 0);
+		//}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 	return true;
 }
 

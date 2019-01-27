@@ -483,31 +483,33 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 bool Tag2 = false;
 
 
-                if (Data.ADList01.Count > 20)
+                if (Data.ADList01.Count > 2000)
                 {
                     Tag1 = true;
 
-                    byte[] buf = Data.ADList01.Skip(0).Take(20).ToArray();
-
                     lock (Data.ADList01)
-                        Data.ADList01.RemoveRange(0, 20);
-
-                    for (int k = 2; k < 10; k++)
                     {
-                        int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
+                        byte[] buf = Data.ADList01.Skip(0).Take(20).ToArray();
 
-                        if ((buf[2 * k] & 0x80) == 0x80)
+
+                        Data.ADList01.RemoveRange(0, 2000);
+
+                        for (int k = 2; k < 10; k++)
                         {
-                            temp = 0x8000 - temp;
-                        }
-                        double value = temp;
-                        value = 10 * (value / 32767);
-                        if ((buf[2 * k] & 0x80) == 0x80)
-                            Data.daRe_AD01[k - 2] = -value;
-                        else
-                            Data.daRe_AD01[k - 2] = value;
-                    }
+                            int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
 
+                            if ((buf[2 * k] & 0x80) == 0x80)
+                            {
+                                temp = 0x8000 - temp;
+                            }
+                            double value = temp;
+                            value = 10 * (value / 32767);
+                            if ((buf[2 * k] & 0x80) == 0x80)
+                                Data.daRe_AD01[k - 2] = -value;
+                            else
+                                Data.daRe_AD01[k - 2] = value;
+                        }
+                    }
                 }
                 else
                 {
@@ -515,33 +517,34 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
                 }
 
 
-                if (Data.ADList02.Count > 20)
+                if (Data.ADList02.Count > 2000)
                 {
                     Tag2 = true;
-
-                    byte[] buf = Data.ADList02.Skip(0).Take(20).ToArray();
-
-
                     lock (Data.ADList02)
-                        Data.ADList02.RemoveRange(0, 20);
-
-                    for (int k = 2; k < 10; k++)
                     {
-                        int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
+                        byte[] buf = Data.ADList02.Skip(0).Take(20).ToArray();
 
-                        if ((buf[2 * k] & 0x80) == 0x80)
+
+
+                        Data.ADList02.RemoveRange(0, 2000);
+
+                        for (int k = 2; k < 10; k++)
                         {
-                            temp = 0x8000 - temp;
+                            int temp = (buf[2 * k] & 0x7f) * 256 + buf[2 * k + 1];
+
+                            if ((buf[2 * k] & 0x80) == 0x80)
+                            {
+                                temp = 0x8000 - temp;
+                            }
+
+                            double value = temp;
+                            value = 10 * (value / 32767);
+                            if ((buf[2 * k] & 0x80) == 0x80)
+                                Data.daRe_AD02[k - 2] = -value;
+                            else
+                                Data.daRe_AD02[k - 2] = value;
                         }
-
-                        double value = temp;
-                        value = 10 * (value / 32767);
-                        if ((buf[2 * k] & 0x80) == 0x80)
-                            Data.daRe_AD02[k - 2] = -value;
-                        else
-                            Data.daRe_AD02[k - 2] = value;
                     }
-
                 }
                 else
                 {
@@ -551,7 +554,7 @@ Search the device with VID-PID 04b4-00F1 and if found, select the end point
 
                 if (Tag1 == false && Tag2 == false)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                 }
 
 
