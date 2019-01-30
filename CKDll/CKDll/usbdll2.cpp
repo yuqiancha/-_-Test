@@ -377,7 +377,8 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 								{
 									int num = bufsav[i * 682 + 2] * 256 + bufsav[i * 682 + 3];//有效位
 									if (num == 2) {
-										//	pTr->mRecalFun("校验码ERROR", (int)bufsav[i * 682 + 4], (int)bufsav[i * 682 + 5]);
+											pTr->mRecalFun("校验码 ERROR", (int)bufsav[i * 682 + 4], (int)bufsav[i * 682 + 5]);
+											pTr->mRecalFun("ABORT", 0, 0);
 									}
 								}
 								if (bufsav[i * 682 + 0] == 0x1D && bufsav[i * 682 + 1] == 0x01)
@@ -528,7 +529,7 @@ DWORD WINAPI GetDataFun(LPVOID ptr)
 						}
 						else
 						{
-							pTr->mRecalFun("设备收到数据ERROR", 0, 0);
+							pTr->mRecalFun("设备收到数据Error", 0, 0);
 						}
 
 						memmove(dealbuf, dealbuf + 4096, pos - 4096);
@@ -833,7 +834,12 @@ bool  __stdcall myUsbDLL::SetAntennaSendAndReceiveSwitchTime(double mTime) {
 bool __stdcall  myUsbDLL::SetVotateLimit(int tag, double LoVotage, double HiVotage, double LoCurrent, double HiCurrent)
 {
 	//LOG4CPLUS_DEBUG(logger, "SetVotateLimit.. " << tag << "低压" << LoVotage << "高压" << HiVotage << "低电流" << LoCurrent << "高电流" << HiCurrent);
-
+	
+	if (mRecalFun) {
+		char outbuf[256] = { 0 };
+		sprintf_s(outbuf, "CKLOG-- 通道[%d] 低压[%10.3f] 高压[%10.3f] 低电流[%10.3f] 高电流[%10.3f]", tag, LoVotage, HiVotage, LoCurrent, HiCurrent);	
+		mRecalFun(outbuf, 0, 0);
+	}
 
 	if (tag == 0)//+4V
 	{
@@ -856,6 +862,8 @@ bool __stdcall  myUsbDLL::SetVotateLimit(int tag, double LoVotage, double HiVota
 
 bool __stdcall myUsbDLL::Continue()
 {
+	SendCMD(0x84, 0x01);
+
 	//mRecalFun("CKLOG --Continue()", 0, 0);
 	Fun_DY1();
 	Sleep(100);
@@ -923,7 +931,9 @@ bool __stdcall  myUsbDLL::Start()
 {
 	//LOG4CPLUS_DEBUG(logger, "Start..");
 
-	shutpower = false;
+	if (mRecalFun) {
+		mRecalFun("CKLOG---Start", 0, 0);
+	}
 
 	SendCMD(0x84, 0x01);
 	//LOG4CPLUS_DEBUG(logger, "上电..");
@@ -964,37 +974,28 @@ bool __stdcall  myUsbDLL::Start()
 	buf[13] = 0x25;
 	buf[14] = 0xa0;//高温老练时间
 
-	int h4v = (HiV_4 / 2)*3276.7;
-	int l4v = (LoV_4 / 2)*3276.7;
-	int h4c = (HiC_4 * 0.555 + 2.529)*3276.7;
-	int l4c = (LoC_4 * 0.555 + 2.529)*3276.7;
-
 	int h7v = (HiV_7 / 2)*3276.7;
 	int l7v = (LoV_7 / 2)*3276.7;
 	int h7c = (HiC_7 * 0.555 + 2.494)*3276.7;
 	int l7c = (LoC_7 * 0.555 + 2.494)*3276.7;
 
+	int h4v = (HiV_4 / 2)*3276.7;
+	int l4v = (LoV_4 / 2)*3276.7;
+	int h4c = (HiC_4 * 0.555 + 2.529)*3276.7;
+	int l4c = (LoC_4 * 0.555 + 2.529)*3276.7;
+
 	buf[15] = (h7v & 0xff00) >> 8;
 	buf[16] = h7v & 0xff;
 	buf[17] = (l7v & 0xff00) >> 8;
 	buf[18] = l7v & 0xff;//+7V电压
-
-	//buf[19] = (h7c & 0xff00) >> 8;
-	//buf[20] = h7c & 0xff;
-	//buf[21] = (l7c & 0xff00) >> 8;
-	//buf[22] = l7c & 0xff;//+7V电流
 	buf[19] = (h4v & 0xff00) >> 8;
 	buf[20] = h4v & 0xff;
 	buf[21] = (l4v & 0xff00) >> 8;
 	buf[22] = l4v & 0xff;//+4V电压
-
 	buf[23] = (h7c & 0xff00) >> 8;
 	buf[24] = h7c & 0xff;
 	buf[25] = (l7c & 0xff00) >> 8;
 	buf[26] = l7c & 0xff;//+7V电流
-
-
-
 	buf[27] = (h4c & 0xff00) >> 8;
 	buf[28] = h4c & 0xff;
 	buf[29] = (l4c & 0xff00) >> 8;
@@ -1040,6 +1041,7 @@ bool __stdcall  myUsbDLL::Stop()
 
 void  __stdcall myUsbDLL::Close() {
 	//LOG4CPLUS_DEBUG(logger, "Close");
+//	Logger::getRoot().shutdown();
 	PowerOff_Target();
 	RecvTag = false;
 }
@@ -1350,6 +1352,13 @@ bool  __stdcall myUsbDLL::SetAmpAndPhpTable(const char* fileName) {
 	}
 
 	tempfilename = fileName;
+
+	//if (mRecalFun) {
+	//	char outbuf[256] = { 0 };
+	//	sprintf_s(outbuf,256, "CKLOG-- 文件名[%s]", fileName);
+	//	mRecalFun(outbuf, 0, 0);
+	//}
+
 	//LOG4CPLUS_DEBUG(logger, "SetAmpAndPhpTable:" << tempfilename.c_str());
 
 	FILE *fp;
@@ -1386,6 +1395,12 @@ bool  __stdcall myUsbDLL::SetSingleAmpAndPhp(unsigned ch, double amp, double php
 {
 	SetAmpAndPhpTable(tempfilename.c_str());
 
+	if (mRecalFun) {
+		char outbuf[256] = { 0 };
+		sprintf_s(outbuf,256, "CKLOG-- 通道[%d] 衰减[%f] 移相[%f] 文件名[%s]", ch, amp, php, tempfilename.c_str());
+		mRecalFun(outbuf, 0, 0);
+	}
+
 	TagAB = 0x00;
 	//LOG4CPLUS_DEBUG(logger, "SetSingleAmpAndPhp ch="<<ch<<" amp="<<amp<<" php="<<php);
 
@@ -1407,7 +1422,15 @@ bool  __stdcall myUsbDLL::SetSingleAmpAndPhp(unsigned ch, double amp, double php
 				if (mRecalFun) {
 					mRecalFun("CKLOG --SetSingleAmpAndPhp() failed", 0, 0);
 				}
-				return false;
+			//	return false;
+
+				Stop();
+				Sleep(500);
+				Start();
+				if (mRecalFun) {
+					mRecalFun("CKLOG --ReStart Test Using Stop and Start Method", 0, 0);
+				}
+				return true;
 			}
 		}
 		//LOG4CPLUS_DEBUG(logger, "SetSingleAmpAndPhp Successed!");

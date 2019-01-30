@@ -118,8 +118,8 @@ public:
 
 	string tempfilename;
 
-	/*Logger logger = Logger::getRoot();*/
-//	Logger logger = Logger::getInstance(L"test");
+	//Logger logger = Logger::getRoot();
+	//Logger logger = Logger::getInstance(L"test");
 
 	int TagAB = 0x0;
 };

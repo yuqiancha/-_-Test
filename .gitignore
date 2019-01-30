@@ -269,3 +269,4 @@ UsbApi/UsbApiDemo/CKDll.ipdb
 *.ipdb
 *.iobj
 *.exp
+CKDll/CKDll/CKDll.vcxproj
